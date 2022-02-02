@@ -12,7 +12,7 @@ export const createNewPostApi = async (
     Title: title.trim(),
     Content: content.trim(),
     Slug,
-    Image: data,
+    // Image: data,
   });
   const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/posts`, {
     method: 'POST',

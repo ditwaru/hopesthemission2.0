@@ -18,6 +18,7 @@ module.exports = {
       },
       fontFamily: {
         shadowsIntoLight: ['Shadows Into Light Two'],
+        patrickHand: ['Patrick Hand'],
       },
     },
   },

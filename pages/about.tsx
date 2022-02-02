@@ -2,7 +2,7 @@ import { GetStaticProps } from 'next';
 import Image from 'next/image';
 const AboutPage = ({ about }) => {
   return (
-    <section className="max-w-lg w-full p-5">
+    <section className="max-w-lg w-full m-5 flex flex-col justify-center">
       <h1 className="text-4xl font-bold">{about.Title}</h1>
       <p>{about.Content}</p>
       <Image

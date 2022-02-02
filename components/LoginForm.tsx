@@ -6,35 +6,41 @@ export const LoginForm = ({ setTokenState }) => {
   const [password, setPassword] = useState('');
   return (
     <form
-      className="flex flex-col"
+      className="flex flex-col space-y-2"
       onSubmit={async (e) => {
         e.preventDefault();
         const token = await loginApi(username, password);
         if (token !== 'error') setTokenState(token);
-        setPassword('');
+        return setPassword('');
       }}
     >
-      <label className="text-white" htmlFor="username">
-        Username
-      </label>
-      <input
-        onChange={(e) => setUsername(e.target.value)}
-        className="border"
-        type="email"
-        id="username"
-        value={username}
-        name="username"
-      />
-      <label htmlFor="password">Password</label>
-      <input
-        onChange={(e) => setPassword(e.target.value)}
-        className="border"
-        type="password"
-        id="password"
-        value={password}
-        name="password"
-      />
-      <button type="submit">Login</button>
+      <div className="flex flex-col">
+        <label className="" htmlFor="username">
+          Username
+        </label>
+        <input
+          onChange={(e) => setUsername(e.target.value)}
+          className="py-1 px-3 rounded-lg border"
+          type="email"
+          id="username"
+          value={username}
+          name="username"
+        />
+      </div>
+      <div className="flex flex-col">
+        <label htmlFor="password">Password</label>
+        <input
+          onChange={(e) => setPassword(e.target.value)}
+          className="py-1 px-3 rounded-lg border"
+          type="password"
+          id="password"
+          value={password}
+          name="password"
+        />
+      </div>
+      <button className="rounded-lg bg-gray-200 py-1 px-3" type="submit">
+        Login
+      </button>
     </form>
   );
 };

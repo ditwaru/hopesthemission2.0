@@ -12,72 +12,83 @@ export const EditEvent: NextPage = ({ event, token }) => {
 
   if (editPageState === 0)
     return (
-      <form
-        className="flex flex-col space-y-2"
-        onSubmit={(e) => e.preventDefault()}
-      >
-        <label htmlFor="title">Title</label>
-        <input
-          className="border"
-          name="title"
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
+      <>
+        <h1 className="text-3xl font-bold my-10">Event editor</h1>
+        <form
+          className="flex flex-col space-y-2"
+          onSubmit={(e) => e.preventDefault()}
+        >
+          <div className="flex flex-col">
+            <label htmlFor="title">Title</label>
+            <input
+              className="py-1 px-3 rounded-lg border"
+              name="title"
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
 
-        <label htmlFor="date">Date</label>
-        <input
-          type="date"
-          name="date"
-          id="date"
-          className="border"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          required
-        />
+          <div className="flex flex-col">
+            <label htmlFor="date">Date</label>
+            <input
+              type="date"
+              name="date"
+              id="date"
+              className="py-1 px-3 rounded-lg border"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              required
+            />
+          </div>
 
-        <label htmlFor="content">Content</label>
-        <textarea
-          className="border"
-          name="content"
-          id=""
-          cols={30}
-          rows={10}
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        />
-        <div className="flex space-x-3">
-          <button
-            className="border"
-            onClick={async () => {
-              const httpStatus = await updateEventApi(event.id, token, {
-                Title: title,
-                Content: content,
-                Date: date,
-              });
-              httpStatus === 200 ? setEditPageState(3) : setEditPageState(4);
-            }}
-          >
-            Update
-          </button>
-          <Link href="/admin">
-            <a className="border">Cancel</a>
-          </Link>
-          <button
-            className="border"
-            onClick={async () => {
-              const returnVal = confirm('Are you sure you want to delete?');
-              if (returnVal) {
-                const httpStatus = await deleteEventApi(event.id, token);
-                httpStatus === 200 ? setEditPageState(1) : setEditPageState(2);
-              }
-              return false;
-            }}
-          >
-            Delete
-          </button>
-        </div>
-      </form>
+          <div className="flex flex-col">
+            <label htmlFor="content">Content</label>
+            <textarea
+              className="p-3 rounded-lg border"
+              name="content"
+              id=""
+              cols={30}
+              rows={10}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+          </div>
+          <div className="flex space-x-3">
+            <button
+              className="rounded-lg bg-teal-200 py-1 px-3"
+              onClick={async () => {
+                const httpStatus = await updateEventApi(event.id, token, {
+                  Title: title,
+                  Content: content,
+                  Date: date,
+                });
+                httpStatus === 200 ? setEditPageState(3) : setEditPageState(4);
+              }}
+            >
+              Update
+            </button>
+            <Link href="/admin">
+              <a className="rounded-lg bg-gray-200 py-1 px-3">Cancel</a>
+            </Link>
+            <button
+              className="rounded-lg bg-red-200 py-1 px-3"
+              onClick={async () => {
+                const returnVal = confirm('Are you sure you want to delete?');
+                if (returnVal) {
+                  const httpStatus = await deleteEventApi(event.id, token);
+                  httpStatus === 200
+                    ? setEditPageState(1)
+                    : setEditPageState(2);
+                }
+                return false;
+              }}
+            >
+              Delete
+            </button>
+          </div>
+        </form>
+      </>
     );
   if (editPageState > 0) {
     const states = [
@@ -89,9 +100,9 @@ export const EditEvent: NextPage = ({ event, token }) => {
     ];
     return (
       <div>
-        <p className="text-green-700">{states[editPageState]}</p>
+        <p className="text-green-700 mb-5">{states[editPageState]}</p>
         <Link href="/admin">
-          <a className="border">Go back</a>
+          <a className="rounded-lg bg-gray-200 py-1 px-3">Go back</a>
         </Link>
       </div>
     );

@@ -1,17 +1,13 @@
 import { GetStaticProps, NextPage } from 'next';
-import { BlogCard } from 'components/Blogs/BlogCard';
+import { BlogCard } from 'components/BlogCard';
 
 const PostsPage: NextPage = ({ data }) => {
   return (
     <>
       <h1 className="text-5xl mt-5">Blogs 📑</h1>
-      <div className="my-5 w-full p-5 max-w-lg">
+      <div className="w-screen m-5 max-w-lg space-y-5">
         {data.map((post) => (
-          <BlogCard key={post.id} post={post} url={post.Slug}>
-            <p className="whitespace-nowrap overflow-ellipsis overflow-hidden">
-              {post.Content}
-            </p>
-          </BlogCard>
+          <BlogCard key={post.id} post={post} url={post.Slug} />
         ))}
       </div>
     </>

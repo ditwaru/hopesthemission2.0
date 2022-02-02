@@ -1,11 +1,11 @@
-import { monthConverter } from '../../lib/monthConverter';
+import { monthConverter } from 'lib/monthConverter';
 import Link from 'next/link';
 export const EventCard = ({ event, url }) => {
   const dateArray = event.Date.split('-');
   return (
     <div
       key={event.id}
-      className="border rounded-lg p-2 my-3 bg-white filter shadow-lg hover:scale-110 transition-all duration-300"
+      className="border rounded-lg p-2 bg-white filter shadow-lg hover:scale-110 transition-all duration-300 mx-5"
     >
       <Link href={`/events/${url}`}>
         <a>

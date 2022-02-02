@@ -3,7 +3,7 @@ import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 
 const EventPage: NextPage = ({ event }) => {
   return (
-    <section className="w-full max-w-lg p-5">
+    <section className="w-full max-w-lg m-5">
       <p className="text-semibold text-md text-red-700 mt-3">
         {dateConverter(event.Date)}
       </p>
