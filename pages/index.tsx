@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const Home: NextPage = ({ home }) => {
+  // todo: social media page, typescript, upload pictures through admin dashboard, logout button for admin dashboard
   return (
     <div>
       <Head>
@@ -19,6 +20,7 @@ const Home: NextPage = ({ home }) => {
             layout="fill"
             objectFit="cover"
             objectPosition="center"
+            priority
           />
         </div>
 

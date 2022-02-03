@@ -7,8 +7,14 @@ const CreateBlog = ({ token }) => {
   const [blogCreated, setBlogCreated] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  // const [image, setImage] = useState(new File([''], ''));
+  const [image, setImage] = useState<FormData>();
 
+  const uploadFile = (e) => {
+    const file = e.target.files[0];
+    const data = new FormData();
+    data.append('file', file);
+    setImage(data);
+  };
   return (
     <>
       <h1 className="text-3xl font-bold my-10">Create a new blog</h1>
@@ -20,9 +26,8 @@ const CreateBlog = ({ token }) => {
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          const res = await createNewPostApi(title, content, token, '');
+          const res = await createNewPostApi(title, content, token, image);
           if (res !== 'error') {
-            console.log(res);
             setBlogCreated(true);
           }
         }}
@@ -51,15 +56,8 @@ const CreateBlog = ({ token }) => {
             required
           />
         </div>
-        {/* <label htmlFor="image">Image</label>
-        <input
-          type="file"
-          name="image"
-          id="image"
-          onChange={(e) => {
-            e.target.files && setImage(e.target.files[0]);
-          }}
-        /> */}
+        <label htmlFor="image">Image</label>
+        <input type="file" name="image" id="image" onChange={uploadFile} />
         <div className="flex space-x-2">
           <button className="rounded-lg bg-teal-200 py-1 px-3" type="submit">
             Create
