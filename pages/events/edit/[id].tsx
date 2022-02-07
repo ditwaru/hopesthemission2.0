@@ -116,7 +116,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
 }) => {
   const { id } = query;
-  const url = process.env.NEXT_PUBLIC_STRAPI_URL;
+  const url = process.env.NEXT_PUBLIC_SERVER_URL;
   const response = await fetch(`${url}/events/${id}`);
   const event = await response.json();
 

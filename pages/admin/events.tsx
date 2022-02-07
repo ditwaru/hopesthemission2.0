@@ -17,14 +17,12 @@ const EditEvent: NextPage = ({ token, events }) =>
 export default EditEvent;
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const url = process.env.NEXT_PUBLIC_STRAPI_URL;
+  const url = process.env.NEXT_PUBLIC_SERVER_URL;
 
   const eventsResponse = await fetch(`${url}/events`);
   const events = await eventsResponse.json();
-  console.log(events);
-  const filteredEvents = filterOldEvents(new Date(), events);
 
   return {
-    props: { token: req.cookies.token || '', events: filteredEvents },
+    props: { token: req.cookies.token || '', events },
   };
 };

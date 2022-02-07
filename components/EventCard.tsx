@@ -1,7 +1,7 @@
 import { monthConverter } from 'lib/monthConverter';
 import Link from 'next/link';
 export const EventCard = ({ event, url }) => {
-  const dateArray = event.Date.split('-');
+  const dateArray = event.date.split('T')[0].split('-');
   return (
     <div
       key={event.id}
@@ -12,10 +12,10 @@ export const EventCard = ({ event, url }) => {
           <div className="flex justify-between items-center">
             <div>
               <h2 className="font-semibold text-pink-700 w-40 whitespace-nowrap overflow-ellipsis overflow-hidden">
-                {event.Title}
+                {event.title}
               </h2>
               <p className="w-40 whitespace-nowrap overflow-ellipsis overflow-hidden">
-                {event.Content}
+                {event.body}
               </p>
             </div>
             <div className="flex flex-col items-center rounded-md border">

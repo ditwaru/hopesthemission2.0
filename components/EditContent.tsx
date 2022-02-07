@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { Pagination } from 'components/Pagination';
+import { AdminPagination } from 'components/AdminPagination';
 import { Search } from 'components/Search';
 
 export const EditContent = ({ contents, Child, type }) => {
@@ -10,7 +10,7 @@ export const EditContent = ({ contents, Child, type }) => {
   const filteredSearchPosts = searchText
     ? contents.filter(
         (post) =>
-          post.Content.includes(searchText) || post.Title.includes(searchText)
+          post.body.includes(searchText) || post.title.includes(searchText)
       )
     : contents;
 
@@ -32,12 +32,12 @@ export const EditContent = ({ contents, Child, type }) => {
       <div className="w-screen m-5 max-w-lg space-y-5">
         {arr.map((post) =>
           type === 'blog' ? (
-            <Child key={post.id} post={post} url={`edit/${post.id}`} />
+            <Child key={post.id} blog={post} url={`edit/${post.id}`} />
           ) : (
             <Child key={post.id} event={post} url={`edit/${post.id}`} />
           )
         )}
-        <Pagination
+        <AdminPagination
           contents={filteredSearchPosts}
           amount={amount}
           setPostIndex={setPostIndex}

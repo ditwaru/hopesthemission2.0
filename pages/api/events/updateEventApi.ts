@@ -1,6 +1,6 @@
 export const updateEventApi = async (id, token, body) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/events/${id}`,
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/events/${id}`,
     {
       method: 'PUT',
       headers: {

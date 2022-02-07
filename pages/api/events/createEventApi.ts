@@ -6,7 +6,7 @@ export const createEventApi = async (token, body) => {
     Date: body.date,
   });
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/events`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/events`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

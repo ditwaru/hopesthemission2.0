@@ -25,7 +25,7 @@ export const Navbar = () => {
         </Link>
       </div>
       <div className={onHomePage ? 'hidden' : ''}>
-        <Link href="/posts">
+        <Link href="/blogs">
           <a>Blogs</a>
         </Link>{' '}
         |{' '}
@@ -38,9 +38,9 @@ export const Navbar = () => {
         </Link>
       </div>
       <div className="absolute right-5 top-1/2 transform -translate-y-1/2">
-        <Link href="/admin">
-          <a>Admin</a>
-        </Link>
+        <a href="/admin">
+          <p>Admin</p>
+        </a>
       </div>
     </nav>
   );

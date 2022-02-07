@@ -1,4 +1,4 @@
-export const createNewPostApi = async (
+export const createNewBlogApi = async (
   title: string,
   content,
   token,
@@ -13,7 +13,7 @@ export const createNewPostApi = async (
     // Image: image,
   });
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/posts`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/blogs`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

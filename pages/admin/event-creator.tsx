@@ -81,7 +81,7 @@ const CreateEvent: NextPage = ({ token }) => {
 export default CreateEvent;
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const url = process.env.NEXT_PUBLIC_STRAPI_URL;
+  const url = process.env.NEXT_PUBLIC_SERVER_URL;
 
   const eventsResponse = await fetch(`${url}/events`);
   const events = await eventsResponse.json();

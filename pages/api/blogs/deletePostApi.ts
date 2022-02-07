@@ -1,5 +1,5 @@
-export const deletePostApi = async (id, token) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/posts/${id}`, {
+export const deleteBlogApi = async (id, token) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/blogs/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

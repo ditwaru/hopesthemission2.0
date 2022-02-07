@@ -2,33 +2,34 @@ import { dateConverter } from 'lib/dateConverter';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
 
-const PostPage: NextPage = ({ post }) => {
+const BlogsPage: NextPage = ({ blog }) => {
+  console.log(blog);
   return (
     <section className="max-w-lg w-full m-5">
-      <h1 className="font-bold text-4xl text-purple-600">{post.Title}</h1>
-      {post.Image && (
+      <h1 className="font-bold text-4xl text-purple-600">{blog.title}</h1>
+      {blog.Image && (
         <Image
-          src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${post.Image.url}`}
+          src={`${process.env.NEXT_PUBLIC_SERVER_URL}${blog.Image.url}`}
           height={300}
           width={300}
         />
       )}
       <p className="mb-5 text-xs mt-2">
-        Published: {dateConverter(post.published_at)}
+        Published: {dateConverter(blog.published)}
       </p>
-      <p className="">{post.Content}</p>
+      <p className="">{blog.body}</p>
     </section>
   );
 };
 
-export default PostPage;
+export default BlogsPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/posts`);
-  const posts = await res.json();
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/blogs`);
+  const blogs = await res.json();
 
-  const paths = posts.map((post) => ({
-    params: { slug: post.Slug },
+  const paths = blogs.map((blog) => ({
+    params: { slug: blog.slug },
   }));
 
   return {
@@ -40,14 +41,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug } = params;
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/posts?Slug=${slug}`
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/blogs/${slug}`
   );
-  const data = await res.json();
-  const post = data[0];
+  const blog = await res.json();
 
   return {
     props: {
-      post,
+      blog: blog[0],
     },
   };
 };

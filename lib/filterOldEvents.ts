@@ -1,8 +1,8 @@
 export const filterOldEvents = (today, arr) => {
-  const sortedArr = arr.sort((a, b) => Date.parse(a.Date) - Date.parse(b.Date));
+  // const sortedArr = arr.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
 
-  const filteredEvents = sortedArr.filter(
-    (event) => new Date(event.Date + ' 11:59 pm').getTime() >= today.getTime()
+  const filteredEvents = arr.filter(
+    (event) => new Date(event.date + ' 11:59 pm').getTime() >= today.getTime()
   );
 
   return filteredEvents;

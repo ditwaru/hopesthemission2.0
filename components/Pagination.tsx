@@ -1,56 +1,45 @@
-import { useState } from 'react';
+import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faLongArrowAltLeft,
   faLongArrowAltRight,
 } from '@fortawesome/free-solid-svg-icons';
-
-export const Pagination = ({ contents, amount, setPostIndex }) => {
-  const [pageIndex, setPageIndex] = useState(1);
-  const totalContent: number = contents.length;
-  const highestPageNumber =
-    totalContent < amount ? 1 : Math.ceil(totalContent / amount);
-
-  const pagination = Array.from(
-    { length: highestPageNumber },
-    (bruh, i) => i + 1
-  );
-  const pageClickHandler = (i: number) => {
-    setPostIndex(amount * i - amount); // 0 indexed
-    setPageIndex(i); // 1 indexed
-  };
-
+export const Pagination = ({ type, pageNumbers, currentPage }) => {
   return (
-    <nav className="flex justify-between w-screen max-w-lg">
-      <button
-        className={`ml-5 ${
-          pageIndex === 1 ? 'opacity-50 point-events-none' : ''
-        }`}
-        onClick={() => {
-          pageIndex > 1 && pageClickHandler(pageIndex - 1);
-        }}
-      >
-        <FontAwesomeIcon icon={faLongArrowAltLeft} />
-      </button>
-      {pagination.map((i) => (
-        <button
-          key={i}
-          onClick={() => pageClickHandler(i)}
-          className={pageIndex === i ? 'font-bold' : ''}
+    <nav className="flex justify-between mx-5">
+      <Link href={`/${type}/page/${currentPage - 1}`}>
+        <a
+          className={currentPage === 1 ? `pointer-events-none opacity-50` : ''}
         >
-          {i}
-        </button>
-      ))}
-      <button
-        className={`mr-5 ${
-          pageIndex === highestPageNumber ? 'opacity-50 point-events-none' : ''
-        }`}
-        onClick={() => {
-          pageIndex < highestPageNumber && pageClickHandler(pageIndex + 1);
-        }}
-      >
-        <FontAwesomeIcon icon={faLongArrowAltRight} />
-      </button>
+          <FontAwesomeIcon icon={faLongArrowAltLeft} />
+        </a>
+      </Link>
+
+      {Array.from({ length: pageNumbers }, (bruh, i) => i + 1).map(
+        (pageNumber) => (
+          <Link key={pageNumber} href={`/${type}/page/${pageNumber}`}>
+            <a
+              className={
+                currentPage === pageNumber
+                  ? 'underline text-blue-500 text-xl'
+                  : ''
+              }
+            >
+              {pageNumber}
+            </a>
+          </Link>
+        )
+      )}
+
+      <Link href={`/${type}/page/${currentPage + 1}`}>
+        <a
+          className={
+            currentPage === pageNumbers ? `pointer-events-none opacity-50` : ''
+          }
+        >
+          <FontAwesomeIcon icon={faLongArrowAltRight} />
+        </a>
+      </Link>
     </nav>
   );
 };

@@ -47,15 +47,14 @@ export const AdminPage: NextPage = ({ token, events }) => {
 export default AdminPage;
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const url = process.env.NEXT_PUBLIC_STRAPI_URL;
-  const postsResponse = await fetch(`${url}/posts`);
-  const posts = await postsResponse.json();
+  const url = process.env.NEXT_PUBLIC_SERVER_URL;
+  const blogsResponse = await fetch(`${url}/blogs`);
+  const blogs = await blogsResponse.json();
 
   const eventsResponse = await fetch(`${url}/events`);
   const events = await eventsResponse.json();
-  const filteredEvents = filterOldEvents(new Date(), events);
 
   return {
-    props: { token: req.cookies.token || '', posts, events: filteredEvents },
+    props: { token: req.cookies.token || '', blogs, events },
   };
 };
