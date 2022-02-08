@@ -4,7 +4,7 @@ export const createNewBlogApi = async (
   title: string,
   content: string,
   token: string,
-  image
+  image: File | undefined
 ) => {
   // send image to cloudinary
   if (image) {

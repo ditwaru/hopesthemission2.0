@@ -26,6 +26,7 @@
     "@types/typescript": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "latest",
     "autoprefixer": "latest",
+    "eslint": "^8.8.0",
     "postcss": "latest",
     "tailwindcss": "latest"
   }

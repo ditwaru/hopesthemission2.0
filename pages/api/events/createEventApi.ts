@@ -5,7 +5,7 @@ export const createEventApi = async (
   title: string,
   content: string,
   date: string,
-  image: FormData
+  image: File | undefined
 ) => {
   let imageURL: string;
   const data = {

@@ -1,17 +1,19 @@
 import { createNewBlogApi } from 'pages/api/blogs/createNewBlogApi';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Link from 'next/link';
 import { GetServerSideProps } from 'next';
 
-const CreateBlog = ({ token }) => {
+const CreateBlog = ({ token }: { token: string }) => {
   const [blogCreated, setBlogCreated] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [image, setImage] = useState<FormData>();
+  const [image, setImage] = useState<File>();
 
-  const uploadFile = (e) => {
-    const file = e.target.files[0];
-    setImage(file);
+  const uploadFile = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      setImage(file);
+    }
   };
   return (
     <>

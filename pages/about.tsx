@@ -1,13 +1,17 @@
 import { GetStaticProps } from 'next';
 import Image from 'next/image';
-const AboutPage = ({ about }) => {
+
+interface Props {
+  about: { title: string; body: string; imageURL: string };
+}
+const AboutPage = ({ about }: Props) => {
   return (
     <section className="max-w-lg w-full m-5 flex flex-col justify-center">
       <h1 className="text-4xl font-bold">{about.title}</h1>
       <p>{about.body}</p>
-      {about.image && (
+      {about.imageURL && (
         <Image
-          src={`${process.env.NEXT_PUBLIC_SERVER_URL}${about.Image.url}`}
+          src={`${process.env.NEXT_PUBLIC_SERVER_URL}${about.imageURL}`}
           width={400}
           height={300}
         />

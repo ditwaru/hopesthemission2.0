@@ -3,7 +3,15 @@ import { updateAboutApi } from 'pages/api/about/updateAboutApi';
 import { useState } from 'react';
 import Link from 'next/link';
 
-export const EditAbout: NextPage = ({ about, token }) => {
+interface Props {
+  about: {
+    title: string;
+    body: string;
+  };
+  token: string;
+}
+
+export const EditAbout = ({ about, token }: Props) => {
   const [editPageState, setEditPageState] = useState(0);
   const [title, setTitle] = useState(about.title);
   const [content, setContent] = useState(about.body);

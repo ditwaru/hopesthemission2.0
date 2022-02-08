@@ -1,5 +1,12 @@
 import Link from 'next/link';
-export const BlogCard = ({ blog, slug }) => {
+interface Props {
+  blog: {
+    title: string;
+    body: string;
+  };
+  slug: string;
+}
+export const BlogCard: React.FC<Props> = ({ blog, slug }) => {
   return (
     <div className="border rounded-lg p-2 bg-white filter shadow-lg hover:scale-110 transition-all duration-300 mx-5">
       <Link href={`/blogs/${slug}`}>

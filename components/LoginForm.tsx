@@ -1,7 +1,11 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { loginApi } from 'pages/api/loginApi';
 
-export const LoginForm = ({ setTokenState }) => {
+export const LoginForm = ({
+  setTokenState,
+}: {
+  setTokenState: Dispatch<SetStateAction<string>>;
+}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   return (

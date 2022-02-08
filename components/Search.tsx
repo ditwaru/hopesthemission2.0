@@ -1,4 +1,11 @@
-export const Search = ({ searchText, setSearchText }) => {
+import { Dispatch, SetStateAction } from 'react';
+
+interface Props {
+  searchText: string;
+  setSearchText: Dispatch<SetStateAction<string>>;
+}
+
+export const Search = ({ searchText, setSearchText }: Props) => {
   return (
     <div>
       <input

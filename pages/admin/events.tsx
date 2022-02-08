@@ -4,7 +4,18 @@ import { filterOldEvents } from 'lib/filterOldEvents';
 import { LoginRedirect } from 'components/LoginRedirect';
 import { EditContent } from 'components/EditContent';
 
-const EditEvent: NextPage = ({ token, events }) => {
+interface Props {
+  token: string;
+  events: {
+    body: string;
+    title: string;
+    published: string;
+    id: string;
+    slug: string;
+  }[];
+}
+
+const EditEvent: NextPage<Props> = ({ token, events }) => {
   {
     console.log(events);
     return token ? (

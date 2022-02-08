@@ -1,6 +1,16 @@
 import { monthConverter } from 'lib/monthConverter';
 import Link from 'next/link';
-export const EventCard = ({ event, slug }) => {
+
+interface Props {
+  event: {
+    date: string;
+    id: string;
+    title: string;
+    body: string;
+  };
+  slug: string;
+}
+export const EventCard: React.FC<Props> = ({ event, slug }) => {
   const dateArray = event.date.split('T')[0].split('-');
   return (
     <div

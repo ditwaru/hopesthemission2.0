@@ -1,18 +1,30 @@
 import { GetServerSideProps, NextPage } from 'next';
 import { deleteBlogApi } from 'pages/api/blogs/deleteBlogApi';
 import { updateBlogApi } from 'pages/api/blogs/updateBlogApi';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-export const EditBlog: NextPage = ({ blog, token }) => {
+interface Props {
+  blog: {
+    title: string;
+    body: string;
+    id: string;
+    imageURL: string;
+  };
+  token: string;
+}
+
+export const EditBlog = ({ blog, token }: Props) => {
   const [editPageState, setEditPageState] = useState(0);
   const [title, setTitle] = useState(blog.title);
   const [content, setContent] = useState(blog.body);
-  const [image, setImage] = useState<FormData>();
-  const uploadFile = (e) => {
-    const file = e.target.files[0];
-    setImage(file);
+  const [image, setImage] = useState<File>();
+  const uploadFile = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      setImage(file);
+    }
   };
 
   if (editPageState === 0)

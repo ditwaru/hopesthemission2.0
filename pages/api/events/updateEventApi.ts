@@ -1,4 +1,7 @@
-export const updateEventApi = async (token, body) => {
+export const updateEventApi = async (
+  token: string,
+  body: { title: string; body: string; date: string; id: string }
+) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/events/`, {
     method: 'PUT',
     headers: {

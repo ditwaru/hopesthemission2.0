@@ -1,9 +1,21 @@
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import Link from 'next/link';
 import { AdminPagination } from 'components/AdminPagination';
 import { Search } from 'components/Search';
 
-export const EditContent = ({ contents, Child, type }) => {
+interface Props {
+  contents: {
+    body: string;
+    title: string;
+    published: string;
+    id: string;
+    slug: string;
+  }[];
+  Child: React.FC<any>;
+  type: string;
+}
+
+export const EditContent = ({ contents, Child, type }: Props) => {
   const [postIndex, setPostIndex] = useState(0);
   const [searchText, setSearchText] = useState('');
 
@@ -20,8 +32,7 @@ export const EditContent = ({ contents, Child, type }) => {
       ? filteredSearchPosts
           .sort(
             (a, b) =>
-              new Date(b.published_at).getTime() -
-              new Date(a.published_at).getTime()
+              new Date(b.published).getTime() - new Date(a.published).getTime()
           )
           .slice(postIndex, postIndex + amount)
       : filteredSearchPosts.slice(postIndex, postIndex + amount);

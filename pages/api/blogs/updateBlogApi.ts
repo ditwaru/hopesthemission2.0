@@ -5,7 +5,7 @@ export const updateBlogApi = async (
   title: string,
   body: string,
   id: string,
-  image: Blob
+  image: File | undefined
 ) => {
   if (image) {
     mongoPutRequest(

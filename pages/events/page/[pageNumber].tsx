@@ -1,9 +1,21 @@
 import { EventCard } from 'components/EventCard';
 import { Pagination } from 'components/Pagination';
 import { filterOldEvents } from 'lib/filterOldEvents';
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import { GetStaticPaths, NextPage } from 'next';
 
-const EventsPage: NextPage = ({ events, pageNumbers, currentPage }) => {
+interface Props {
+  events: {
+    id: string;
+    slug: string;
+    date: string;
+    title: string;
+    body: string;
+  }[];
+  pageNumbers: number;
+  currentPage: number;
+}
+
+const EventsPage: NextPage<Props> = ({ events, pageNumbers, currentPage }) => {
   return (
     <>
       <h1 className="text-5xl mt-5">Events 🗓</h1>
@@ -24,7 +36,7 @@ const EventsPage: NextPage = ({ events, pageNumbers, currentPage }) => {
 export default EventsPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch(`http://localhost:1338/events`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/events`);
   const events = await res.json();
   const totalPages = Math.ceil(events.length / 5);
 
@@ -38,16 +50,22 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps = async ({
+  params,
+}: {
+  params: { pageNumber: string };
+}) => {
   const { pageNumber } = params;
 
   // have to do this bc next doesnt allow sharing data from getstaticpaths to here
-  const totalEventPages = await fetch(`http://localhost:1338/events`);
+  const totalEventPages = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/events`
+  );
   const totalEventsPageJson = await totalEventPages.json();
   const pageNumbers = +Math.ceil(totalEventsPageJson.length / 5);
 
   const res = await fetch(
-    `http://localhost:1338/events?page=${pageNumber}&limit=5`
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/events?page=${pageNumber}&limit=5`
   );
   const data = await res.json();
 

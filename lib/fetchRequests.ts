@@ -1,4 +1,4 @@
-export const cloudinaryRequest = async (image: FormData) => {
+export const cloudinaryRequest = async (image: File) => {
   const data = new FormData();
   data.append('file', image);
   data.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_PRESET || '');

@@ -1,19 +1,21 @@
 import { filterOldEvents } from 'lib/filterOldEvents';
 import { GetServerSideProps, NextPage } from 'next';
 import { createEventApi } from 'pages/api/events/createEventApi';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Link from 'next/link';
 
-const CreateEvent: NextPage = ({ token }) => {
+const CreateEvent = ({ token }: { token: string }) => {
   const [eventCreated, setEventCreated] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
-  const [image, setImage] = useState<FormData>(new FormData());
+  const [image, setImage] = useState<File>();
 
-  const uploadFile = (e) => {
-    const file = e.target.files[0];
-    setImage(file);
+  const uploadFile = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      setImage(file);
+    }
   };
 
   return (

@@ -1,4 +1,4 @@
-export const filterOldEvents = (today, arr) => {
+export const filterOldEvents = (today: Date, arr: { date: string }[]) => {
   // const sortedArr = arr.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
 
   const filteredEvents = arr.filter(

@@ -1,11 +1,15 @@
 import { NextPage, GetServerSideProps } from 'next';
 import { useState } from 'react';
-import { filterOldEvents } from 'lib/filterOldEvents';
 import { LoginForm } from 'components/LoginForm';
-
 import Link from 'next/link';
 
-export const AdminPage: NextPage = ({ token, events }) => {
+interface Props {
+  token: string;
+  events: [];
+  blogs: [];
+}
+
+export const AdminPage: NextPage<Props> = ({ token, events, blogs }) => {
   const [tokenState, setTokenState] = useState(token || '');
   if (tokenState) {
     return (
@@ -27,7 +31,11 @@ export const AdminPage: NextPage = ({ token, events }) => {
             </a>
           </Link>
           <Link href="/admin/blogs">
-            <a className="border rounded-lg p-2 bg-white filter shadow-lg hover:scale-110 transition-all duration-300 w-full">
+            <a
+              className={`border rounded-lg p-2 bg-white filter shadow-lg hover:scale-110 transition-all duration-300 w-full ${
+                blogs.length === 0 && 'pointer-events-none opacity-50'
+              }`}
+            >
               Edit Blog
             </a>
           </Link>

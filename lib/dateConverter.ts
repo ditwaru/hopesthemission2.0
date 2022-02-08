@@ -1,5 +1,5 @@
 export const dateConverter = (date: string) => {
-  const options = {
+  const options: Intl.DateTimeFormatOptions = {
     weekday: 'long',
     year: 'numeric',
     month: 'long',

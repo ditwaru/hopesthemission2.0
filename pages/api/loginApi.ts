@@ -1,4 +1,4 @@
-export const loginApi = async (username, password) => {
+export const loginApi = async (username: string, password: string) => {
   const body = JSON.stringify({ username, password });
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login`, {
     method: 'POST',

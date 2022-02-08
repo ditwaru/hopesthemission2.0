@@ -1,4 +1,7 @@
-export const updateAboutApi = async (token, body) => {
+export const updateAboutApi = async (
+  token: string,
+  body: { title: string; body: string }
+) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/about`, {
     method: 'PUT',
     headers: {

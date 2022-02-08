@@ -1,4 +1,4 @@
-export const deleteEventApi = async (id, token) => {
+export const deleteEventApi = async (id: string, token: string) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/events/${id}`,
     {

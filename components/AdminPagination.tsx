@@ -1,11 +1,17 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faLongArrowAltLeft,
   faLongArrowAltRight,
 } from '@fortawesome/free-solid-svg-icons';
 
-export const AdminPagination = ({ contents, amount, setPostIndex }) => {
+interface Props {
+  contents: {}[];
+  amount: number;
+  setPostIndex: Dispatch<SetStateAction<number>>;
+}
+
+export const AdminPagination = ({ contents, amount, setPostIndex }: Props) => {
   const [pageIndex, setPageIndex] = useState(1);
   const totalContent: number = contents.length;
   const highestPageNumber =

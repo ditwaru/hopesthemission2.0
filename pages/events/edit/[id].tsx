@@ -4,7 +4,17 @@ import { updateEventApi } from 'pages/api/events/updateEventApi';
 import { useState } from 'react';
 import Link from 'next/link';
 
-export const EditEvent: NextPage = ({ event, token }) => {
+interface Props {
+  event: {
+    title: string;
+    body: string;
+    date: string;
+    id: string;
+  };
+  token: string;
+}
+
+export const EditEvent = ({ event, token }: Props) => {
   const [editPageState, setEditPageState] = useState(0);
   const [title, setTitle] = useState(event.title);
   const [content, setContent] = useState(event.body);

@@ -3,7 +3,14 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const Home: NextPage = ({ home }) => {
+interface Props {
+  home: {
+    imageURL: string;
+    title: string;
+  };
+}
+
+const Home: NextPage<Props> = ({ home }) => {
   // todo: social media page, typescript, upload pictures through admin dashboard, logout button for admin dashboard
   return (
     <div>

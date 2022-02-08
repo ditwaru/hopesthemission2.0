@@ -2,7 +2,15 @@ import { dateConverter } from 'lib/dateConverter';
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import Image from 'next/image';
 
-const EventPage: NextPage = ({ event }) => {
+interface Props {
+  event: {
+    imageURL: string;
+    date: string;
+    title: string;
+    body: string;
+  };
+}
+const EventPage: NextPage<Props> = ({ event }) => {
   return (
     <section className="w-full max-w-lg m-5">
       {event.imageURL && (
@@ -29,7 +37,7 @@ export default EventPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/events`);
-  const events = await res.json();
+  const events: { slug: string }[] = await res.json();
 
   const paths = events.map((event) => ({
     params: { slug: event.slug },
@@ -41,7 +49,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps = async ({
+  params,
+}: {
+  params: { slug: string };
+}) => {
   const { slug } = params;
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/events/${slug}`

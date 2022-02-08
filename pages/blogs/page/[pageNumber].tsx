@@ -1,8 +1,19 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import { GetStaticPaths, NextPage } from 'next';
 import { BlogCard } from 'components/BlogCard';
 import { Pagination } from 'components/Pagination';
 
-const BlogsPage: NextPage = ({ blogs, pageNumbers, currentPage }) => {
+interface Props {
+  blogs: {
+    title: string;
+    body: string;
+    id: string;
+    slug: string;
+  }[];
+  pageNumbers: number;
+  currentPage: number;
+}
+
+const BlogsPage: NextPage<Props> = ({ blogs, pageNumbers, currentPage }) => {
   return (
     <>
       <h1 className="text-5xl mt-5">Blogs 📑</h1>
@@ -39,11 +50,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps = async ({
+  params,
+}: {
+  params: { pageNumber: string };
+}) => {
   const { pageNumber } = params;
 
   // have to do this bc next doesnt allow sharing data from getstaticpaths to here
-  const totalBlogPages = await fetch(`http://localhost:1338/blogs`);
+  const totalBlogPages = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/blogs`
+  );
   const totalBlogsPageJson = await totalBlogPages.json();
   const pageNumbers = +Math.ceil(totalBlogsPageJson.length / 5);
 

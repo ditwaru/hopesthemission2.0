@@ -4,7 +4,14 @@ import {
   faLongArrowAltLeft,
   faLongArrowAltRight,
 } from '@fortawesome/free-solid-svg-icons';
-export const Pagination = ({ type, pageNumbers, currentPage }) => {
+
+interface Props {
+  type: string;
+  pageNumbers: number;
+  currentPage: number;
+}
+
+export const Pagination = ({ type, pageNumbers, currentPage }: Props) => {
   return (
     <nav className="flex justify-between mx-5">
       <Link href={`/${type}/page/${currentPage - 1}`}>
