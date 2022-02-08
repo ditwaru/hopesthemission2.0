@@ -1,14 +1,26 @@
 import { dateConverter } from 'lib/dateConverter';
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
+import Image from 'next/image';
 
 const EventPage: NextPage = ({ event }) => {
   return (
     <section className="w-full max-w-lg m-5">
+      {event.imageURL && (
+        <div className="w-screen h-96 top-14 left-0 absolute">
+          <Image
+            src={event.imageURL}
+            layout="fill"
+            objectFit="cover"
+            objectPosition="center"
+            priority
+          />
+        </div>
+      )}
       <p className="text-semibold text-md text-red-700 mt-3">
         {dateConverter(event.date)}
       </p>
       <h1 className="font-bold text-4xl text-red-700 mb-5">{event.title}</h1>
-      <p>{event.body}</p>
+      <p className="whitespace-pre-wrap">{event.body}</p>
     </section>
   );
 };

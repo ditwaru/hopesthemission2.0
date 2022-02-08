@@ -21,10 +21,11 @@ export const LoginForm = ({ setTokenState }) => {
         <input
           onChange={(e) => setUsername(e.target.value)}
           className="py-1 px-3 rounded-lg border"
-          type="email"
+          type="text"
           id="username"
           value={username}
           name="username"
+          required
         />
       </div>
       <div className="flex flex-col">
@@ -36,6 +37,7 @@ export const LoginForm = ({ setTokenState }) => {
           id="password"
           value={password}
           name="password"
+          required
         />
       </div>
       <button className="rounded-lg bg-gray-200 py-1 px-3" type="submit">

@@ -1,13 +1,13 @@
 import { monthConverter } from 'lib/monthConverter';
 import Link from 'next/link';
-export const EventCard = ({ event, url }) => {
+export const EventCard = ({ event, slug }) => {
   const dateArray = event.date.split('T')[0].split('-');
   return (
     <div
       key={event.id}
       className="border rounded-lg p-2 bg-white filter shadow-lg hover:scale-110 transition-all duration-300 mx-5"
     >
-      <Link href={`/events/${url}`}>
+      <Link href={`/events/${slug}`}>
         <a>
           <div className="flex justify-between items-center">
             <div>

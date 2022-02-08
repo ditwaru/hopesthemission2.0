@@ -1,4 +1,4 @@
-import { createNewPostApi } from 'pages/api/posts/createNewPostApi';
+import { createNewBlogApi } from 'pages/api/blogs/createNewBlogApi';
 import { useState } from 'react';
 import Link from 'next/link';
 import { GetServerSideProps } from 'next';
@@ -11,9 +11,7 @@ const CreateBlog = ({ token }) => {
 
   const uploadFile = (e) => {
     const file = e.target.files[0];
-    const data = new FormData();
-    data.append('file', file);
-    setImage(data);
+    setImage(file);
   };
   return (
     <>
@@ -24,9 +22,10 @@ const CreateBlog = ({ token }) => {
         </div>
       )}
       <form
+        encType="multipart/form-data"
         onSubmit={async (e) => {
           e.preventDefault();
-          const res = await createNewPostApi(title, content, token, image);
+          const res = await createNewBlogApi(title, content, token, image);
           if (res !== 'error') {
             setBlogCreated(true);
           }
@@ -59,11 +58,18 @@ const CreateBlog = ({ token }) => {
         <label htmlFor="image">Image</label>
         <input type="file" name="image" id="image" onChange={uploadFile} />
         <div className="flex space-x-2">
-          <button className="rounded-lg bg-teal-200 py-1 px-3" type="submit">
+          <button
+            className={`rounded-lg bg-teal-200 py-1 px-3 ${
+              blogCreated ? 'opacity-50 pointer-events-none' : ''
+            }`}
+            type="submit"
+          >
             Create
           </button>
           <Link href="/admin">
-            <a className="rounded-lg bg-gray-200 py-1 px-3">Cancel</a>
+            <a className="rounded-lg bg-gray-200 py-1 px-3">
+              {blogCreated ? 'Go back' : 'Cancel'}
+            </a>
           </Link>
         </div>
       </form>

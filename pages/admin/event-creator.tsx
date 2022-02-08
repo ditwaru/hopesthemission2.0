@@ -9,6 +9,12 @@ const CreateEvent: NextPage = ({ token }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+  const [image, setImage] = useState<FormData>(new FormData());
+
+  const uploadFile = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+  };
 
   return (
     <>
@@ -20,7 +26,13 @@ const CreateEvent: NextPage = ({ token }) => {
       )}
       <form
         className="flex flex-col space-y-3"
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={async (e) => {
+          e.preventDefault();
+          const res = await createEventApi(token, title, content, date, image);
+          if (res.status === 201) {
+            return setEventCreated(true);
+          }
+        }}
       >
         <div className="flex flex-col">
           <label htmlFor="title">Title</label>
@@ -59,18 +71,23 @@ const CreateEvent: NextPage = ({ token }) => {
             required
           />
         </div>
+        <div className="flex flex-col">
+          <label htmlFor="image">Image</label>
+          <input type="file" name="image" id="image" onChange={uploadFile} />
+        </div>
         <div className="flex space-x-3">
           <button
-            className="rounded-lg bg-teal-200 py-1 px-3"
-            onClick={async () => {
-              await createEventApi(token, { title, content, date });
-              return setEventCreated(true);
-            }}
+            className={`rounded-lg bg-teal-200 py-1 px-3 ${
+              eventCreated ? 'opacity-50 pointer-events-none' : ''
+            }`}
+            type="submit"
           >
             Create Event
           </button>
           <Link href="/admin">
-            <a className="rounded-lg bg-gray-200 py-1 px-3">Cancel</a>
+            <a className="rounded-lg bg-gray-200 py-1 px-3">
+              {eventCreated ? 'Go Back' : 'Cancel'}
+            </a>
           </Link>
         </div>
       </form>

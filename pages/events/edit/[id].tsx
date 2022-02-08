@@ -6,9 +6,9 @@ import Link from 'next/link';
 
 export const EditEvent: NextPage = ({ event, token }) => {
   const [editPageState, setEditPageState] = useState(0);
-  const [title, setTitle] = useState(event.Title);
-  const [content, setContent] = useState(event.Content);
-  const [date, setDate] = useState(event.Date);
+  const [title, setTitle] = useState(event.title);
+  const [content, setContent] = useState(event.body);
+  const [date, setDate] = useState(event.date.split('T')[0]);
 
   if (editPageState === 0)
     return (
@@ -37,7 +37,10 @@ export const EditEvent: NextPage = ({ event, token }) => {
               id="date"
               className="py-1 px-3 rounded-lg border"
               value={date}
-              onChange={(e) => setDate(e.target.value)}
+              onChange={(e) => {
+                console.log(e.target.value);
+                setDate(e.target.value);
+              }}
               required
             />
           </div>
@@ -58,10 +61,11 @@ export const EditEvent: NextPage = ({ event, token }) => {
             <button
               className="rounded-lg bg-teal-200 py-1 px-3"
               onClick={async () => {
-                const httpStatus = await updateEventApi(event.id, token, {
-                  Title: title,
-                  Content: content,
-                  Date: date,
+                const httpStatus = await updateEventApi(token, {
+                  title,
+                  body: content,
+                  date: date,
+                  id: event.id,
                 });
                 httpStatus === 200 ? setEditPageState(3) : setEditPageState(4);
               }}

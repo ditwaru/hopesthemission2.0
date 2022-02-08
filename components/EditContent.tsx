@@ -32,9 +32,9 @@ export const EditContent = ({ contents, Child, type }) => {
       <div className="w-screen m-5 max-w-lg space-y-5">
         {arr.map((post) =>
           type === 'blog' ? (
-            <Child key={post.id} blog={post} url={`edit/${post.id}`} />
+            <Child key={post.id} blog={post} slug={`edit/${post.slug}`} />
           ) : (
-            <Child key={post.id} event={post} url={`edit/${post.id}`} />
+            <Child key={post.id} event={post} slug={`edit/${post.slug}`} />
           )
         )}
         <AdminPagination

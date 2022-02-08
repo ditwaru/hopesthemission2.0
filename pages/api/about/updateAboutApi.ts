@@ -1,5 +1,5 @@
-export const updateBlogApi = async (id, token, body) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/blogs/${id}`, {
+export const updateAboutApi = async (token, body) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/about`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

@@ -15,9 +15,9 @@ const Home: NextPage = ({ home }) => {
 
       <section className="m-5">
         <div className="w-screen absolute top-0 left-0 bottom-0 z-0 ">
-          {home.Image && (
+          {home.imageURL && (
             <Image
-              src={`${process.env.NEXT_PUBLIC_SERVER_URL}${home.Image.url}`}
+              src={home.imageURL}
               layout="fill"
               objectFit="cover"
               objectPosition="center"

@@ -7,6 +7,7 @@ module.exports = {
         process.env.NEXT_PUBLIC_SERVER_URL.indexOf('//') + 2,
         process.env.NEXT_PUBLIC_SERVER_URL.lastIndexOf(':')
       ),
+      'res.cloudinary.com',
     ],
   },
   async redirects() {

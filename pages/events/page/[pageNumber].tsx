@@ -9,7 +9,7 @@ const EventsPage: NextPage = ({ events, pageNumbers, currentPage }) => {
       <h1 className="text-5xl mt-5">Events 🗓</h1>
       <div className="w-screen m-5 max-w-lg space-y-5">
         {events.map((event) => (
-          <EventCard key={event.id} event={event} url={event.slug} />
+          <EventCard key={event.id} event={event} slug={event.slug} />
         ))}
         <Pagination
           pageNumbers={pageNumbers}

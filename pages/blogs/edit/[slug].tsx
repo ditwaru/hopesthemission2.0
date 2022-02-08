@@ -1,13 +1,19 @@
 import { GetServerSideProps, NextPage } from 'next';
-import { deletePostApi } from 'pages/api/posts/deletePostApi';
-import { updatePostApi } from 'pages/api/posts/updatePostApi';
+import { deleteBlogApi } from 'pages/api/blogs/deleteBlogApi';
+import { updateBlogApi } from 'pages/api/blogs/updateBlogApi';
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
-export const EditPost: NextPage = ({ post, token }) => {
+export const EditBlog: NextPage = ({ blog, token }) => {
   const [editPageState, setEditPageState] = useState(0);
-  const [title, setTitle] = useState(post.Title);
-  const [content, setContent] = useState(post.Content);
+  const [title, setTitle] = useState(blog.title);
+  const [content, setContent] = useState(blog.body);
+  const [image, setImage] = useState<FormData>();
+  const uploadFile = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+  };
 
   if (editPageState === 0)
     return (
@@ -15,7 +21,17 @@ export const EditPost: NextPage = ({ post, token }) => {
         <h1 className="text-3xl font-bold my-10">Blog editor</h1>
         <form
           className="flex flex-col space-y-2"
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const httpStatus = await updateBlogApi(
+              token,
+              title,
+              content,
+              blog.id,
+              image
+            );
+            httpStatus === 200 ? setEditPageState(3) : setEditPageState(4);
+          }}
         >
           <div className="flex flex-col">
             <label htmlFor="title">Title</label>
@@ -39,17 +55,21 @@ export const EditPost: NextPage = ({ post, token }) => {
               onChange={(e) => setContent(e.target.value)}
             />
           </div>
+          <div className="flex flex-col">
+            <label htmlFor="image">Current Image</label>
+            {blog.imageURL && (
+              <Image src={blog.imageURL} height="150" width="250" />
+            )}
+            <input
+              className={blog.imageURL ? 'mt-2' : ''}
+              type="file"
+              name="image"
+              id="image"
+              onChange={uploadFile}
+            />
+          </div>
           <div className="flex space-x-3">
-            <button
-              className="rounded-lg bg-teal-200 py-1 px-3"
-              onClick={async () => {
-                const httpStatus = await updatePostApi(post.id, token, {
-                  Title: title,
-                  Content: content,
-                });
-                httpStatus === 200 ? setEditPageState(3) : setEditPageState(4);
-              }}
-            >
+            <button className="rounded-lg bg-teal-200 py-1 px-3" type="submit">
               Update
             </button>
             <Link href="/admin">
@@ -60,7 +80,7 @@ export const EditPost: NextPage = ({ post, token }) => {
               onClick={async () => {
                 const returnVal = confirm('Are you sure you want to delete?');
                 if (returnVal) {
-                  const httpStatus = await deletePostApi(post.id, token);
+                  const httpStatus = await deleteBlogApi(blog.id, token);
                   httpStatus === 200
                     ? setEditPageState(1)
                     : setEditPageState(2);
@@ -93,16 +113,16 @@ export const EditPost: NextPage = ({ post, token }) => {
   }
 };
 
-export default EditPost;
+export default EditBlog;
 
 export const getServerSideProps: GetServerSideProps = async ({
   query,
   req,
 }) => {
-  const { id } = query;
+  const { slug } = query;
   const url = process.env.NEXT_PUBLIC_SERVER_URL;
-  const response = await fetch(`${url}/posts/${id}`);
-  const post = await response.json();
+  const response = await fetch(`${url}/blogs/${slug}`);
+  const blog = await response.json();
 
-  return { props: { token: req.cookies.token, post } };
+  return { props: { token: req.cookies.token, blog: blog[0] } };
 };
