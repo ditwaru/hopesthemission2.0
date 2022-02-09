@@ -15,7 +15,7 @@ export const EventCard: React.FC<Props> = ({ event, slug }) => {
   return (
     <div
       key={event.id}
-      className="border rounded-lg p-2 bg-white filter shadow-lg hover:scale-110 transition-all duration-300 mx-5"
+      className="border rounded-lg p-2 bg-white filter shadow-lg md:hover:scale-110 transition-all duration-300 mx-5"
     >
       <Link href={`/events/${slug}`}>
         <a>

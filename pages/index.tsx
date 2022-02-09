@@ -42,26 +42,26 @@ const Home: NextPage<Props> = ({ home }) => {
 
         <div className="flex flex-col items-center space-y-2">
           <Link href="/about">
-            <a className="border p-2 rounded-lg filter drop-shadow-lg bg-white hover:scale-110 transition-all duration-300 w-full max-w-lg">
+            <a className="border p-2 rounded-lg filter drop-shadow-lg bg-white md:hover:scale-110 transition-all duration-300 w-full max-w-lg">
               <h2 className="text-xl font-bold">About &rarr;</h2>
               <p>About Hope's The Mission</p>
             </a>
           </Link>
           <Link href="/blogs">
-            <a className="border p-2 rounded-lg filter drop-shadow-lg bg-white hover:scale-110 transition-all duration-300 w-full max-w-lg">
+            <a className="border p-2 rounded-lg filter drop-shadow-lg bg-white md:hover:scale-110 transition-all duration-300 w-full max-w-lg">
               <h2 className="font-bold text-xl">Blogs &rarr;</h2>
               <p>The wonderful world of blogs</p>
             </a>
           </Link>
           <Link href="/events">
-            <a className="border p-2 rounded-lg filter drop-shadow-lg bg-white hover:scale-110 transition-all duration-300 w-full max-w-lg">
+            <a className="border p-2 rounded-lg filter drop-shadow-lg bg-white md:hover:scale-110 transition-all duration-300 w-full max-w-lg">
               <h2 className="font-bold text-xl">Events &rarr;</h2>
               <p>All the events</p>
             </a>
           </Link>
 
           <Link href="/social">
-            <a className="border p-2 rounded-lg filter drop-shadow-lg bg-white hover:scale-110 transition-all duration-300 w-full max-w-lg">
+            <a className="border p-2 rounded-lg filter drop-shadow-lg bg-white md:hover:scale-110 transition-all duration-300 w-full max-w-lg">
               <h2 className="font-bold text-xl">Social Media &rarr;</h2>
               <p>Follow me on social media!</p>
             </a>

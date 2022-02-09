@@ -32,18 +32,18 @@ export const AdminPage: NextPage<Props> = ({ token, events, blogs }) => {
         </div>
         <div className="flex flex-col space-y-5 w-full max-w-lg items-center">
           <Link href="/admin/about-editor">
-            <a className="border rounded-lg p-2 bg-white filter shadow-lg hover:scale-110 transition-all duration-300 w-full">
+            <a className="border rounded-lg p-2 bg-white filter shadow-lg md:hover:scale-110 transition-all duration-300 w-full">
               Edit About Page
             </a>
           </Link>
           <Link href="/admin/blog-creator">
-            <a className="border rounded-lg p-2 bg-white filter shadow-lg hover:scale-110 transition-all duration-300 w-full">
+            <a className="border rounded-lg p-2 bg-white filter shadow-lg md:hover:scale-110 transition-all duration-300 w-full">
               Create Blog
             </a>
           </Link>
           <Link href="/admin/blogs">
             <a
-              className={`border rounded-lg p-2 bg-white filter shadow-lg hover:scale-110 transition-all duration-300 w-full ${
+              className={`border rounded-lg p-2 bg-white filter shadow-lg md:hover:scale-110 transition-all duration-300 w-full ${
                 blogs.length === 0 && 'pointer-events-none opacity-50'
               }`}
             >
@@ -51,7 +51,7 @@ export const AdminPage: NextPage<Props> = ({ token, events, blogs }) => {
             </a>
           </Link>
           <Link href="/admin/event-creator">
-            <a className="border rounded-lg p-2 bg-white filter shadow-lg hover:scale-110 transition-all duration-300 w-full">
+            <a className="border rounded-lg p-2 bg-white filter shadow-lg md:hover:scale-110 transition-all duration-300 w-full">
               Create Event
             </a>
           </Link>
@@ -59,7 +59,7 @@ export const AdminPage: NextPage<Props> = ({ token, events, blogs }) => {
             <a
               className={`${
                 events.length === 0 && 'pointer-events-none opacity-50'
-              } border rounded-lg p-2 bg-white filter shadow-lg hover:scale-110 transition-all duration-300 w-full`}
+              } border rounded-lg p-2 bg-white filter shadow-lg md:hover:scale-110 transition-all duration-300 w-full`}
             >
               Edit Event
             </a>
