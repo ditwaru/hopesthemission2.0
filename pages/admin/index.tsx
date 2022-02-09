@@ -2,6 +2,8 @@ import { NextPage, GetServerSideProps } from 'next';
 import { useState } from 'react';
 import { LoginForm } from 'components/LoginForm';
 import Link from 'next/link';
+import { logoutApi } from 'pages/api/logoutApi';
+import { useRouter } from 'next/router';
 
 interface Props {
   token: string;
@@ -11,12 +13,21 @@ interface Props {
 
 export const AdminPage: NextPage<Props> = ({ token, events, blogs }) => {
   const [tokenState, setTokenState] = useState(token || '');
+
+  const router = useRouter();
   if (tokenState) {
     return (
       <>
         <h1 className="text-3xl font-bold my-10">Admin Dashboard</h1>
         <div className="absolute top-16 right-5 flex-col flex">
-          <button>Log Out</button>
+          <button
+            onClick={async () => {
+              await logoutApi();
+              router.reload();
+            }}
+          >
+            Log Out
+          </button>
           <button>Account settings</button>
         </div>
         <div className="flex flex-col space-y-5 w-full max-w-lg items-center">
