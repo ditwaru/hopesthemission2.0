@@ -47,7 +47,7 @@ const Home: NextPage<Props> = ({ home }) => {
               <p>About Hope's The Mission</p>
             </a>
           </Link>
-          <Link href="/posts">
+          <Link href="/blogs">
             <a className="border p-2 rounded-lg filter drop-shadow-lg bg-white hover:scale-110 transition-all duration-300 w-full max-w-lg">
               <h2 className="font-bold text-xl">Blogs &rarr;</h2>
               <p>The wonderful world of blogs</p>
@@ -80,5 +80,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: { home: home[0] },
+    revalidate: 30,
   };
 };

@@ -70,5 +70,6 @@ export const getStaticProps = async ({
   const blogs = await res.json();
   return {
     props: { blogs, pageNumbers, currentPage: +pageNumber },
+    revalidate: 30,
   };
 };

@@ -73,5 +73,6 @@ export const getStaticProps = async ({
 
   return {
     props: { events: data, currentPage: +pageNumber, pageNumbers },
+    revalidate: 30,
   };
 };
