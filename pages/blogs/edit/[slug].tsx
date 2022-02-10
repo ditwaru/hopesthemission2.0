@@ -10,7 +10,7 @@ interface Props {
     title: string;
     body: string;
     id: string;
-    imageURL: string;
+    imageURL?: string;
   };
   token: string;
 }

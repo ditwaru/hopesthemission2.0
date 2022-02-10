@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 interface Props {
   blog: {
-    imageURL: string;
+    imageURL?: string;
     title: string;
     published: string;
     body: string;

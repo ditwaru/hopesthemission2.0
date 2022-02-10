@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 interface Props {
   event: {
-    imageURL: string;
+    imageURL?: string;
     date: string;
     title: string;
     body: string;

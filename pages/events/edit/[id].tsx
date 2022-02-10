@@ -11,7 +11,7 @@ interface Props {
     body: string;
     date: string;
     id: string;
-    imageURL: string;
+    imageURL?: string;
   };
   token: string;
 }

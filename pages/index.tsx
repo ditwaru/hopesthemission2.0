@@ -5,13 +5,13 @@ import Link from 'next/link';
 
 interface Props {
   home: {
-    imageURL: string;
+    imageURL?: string;
     title: string;
   };
 }
 
 const Home: NextPage<Props> = ({ home }) => {
-  // todo: social media page, dynamically import components
+  // todo: social media page, dynamically import components, check for unused imports
   return (
     <div>
       <Head>

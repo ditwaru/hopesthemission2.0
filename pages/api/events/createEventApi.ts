@@ -1,4 +1,4 @@
-import { cloudinaryRequest, mongoPostRequest } from 'lib/fetchRequests';
+import { cloudinaryRequest } from 'lib/fetchRequests';
 
 export const createEventApi = async (
   token: string,

@@ -2,7 +2,7 @@ import { GetStaticProps } from 'next';
 import Image from 'next/image';
 
 interface Props {
-  about: { title: string; body: string; imageURL: string };
+  about: { title: string; body: string; imageURL?: string };
 }
 const AboutPage = ({ about }: Props) => {
   return (
