@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Home: NextPage<Props> = ({ home }) => {
-  // todo: social media page, typescript, upload pictures through admin dashboard, logout button for admin dashboard
+  // todo: social media page, dynamically import components
   return (
     <div>
       <Head>

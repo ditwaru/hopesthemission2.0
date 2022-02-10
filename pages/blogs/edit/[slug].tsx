@@ -33,16 +33,8 @@ export const EditBlog = ({ blog, token }: Props) => {
         <h1 className="text-3xl font-bold mb-10">Blog editor</h1>
         <form
           className="flex flex-col space-y-2"
-          onSubmit={async (e) => {
+          onSubmit={(e) => {
             e.preventDefault();
-            const httpStatus = await updateBlogApi(
-              token,
-              title,
-              content,
-              blog.id,
-              image
-            );
-            httpStatus === 200 ? setEditPageState(3) : setEditPageState(4);
           }}
         >
           <div className="flex flex-col">
@@ -81,7 +73,19 @@ export const EditBlog = ({ blog, token }: Props) => {
             />
           </div>
           <div className="flex space-x-3">
-            <button className="rounded-lg bg-teal-200 py-1 px-3" type="submit">
+            <button
+              className="rounded-lg bg-teal-200 py-1 px-3"
+              onClick={async () => {
+                const httpStatus = await updateBlogApi(
+                  token,
+                  title,
+                  content,
+                  blog.id,
+                  image
+                );
+                httpStatus === 200 ? setEditPageState(3) : setEditPageState(4);
+              }}
+            >
               Update
             </button>
             <Link href="/admin">

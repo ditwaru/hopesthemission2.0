@@ -35,17 +35,8 @@ export const EditEvent = ({ event, token }: Props) => {
         <h1 className="text-3xl font-bold my-10">Event editor</h1>
         <form
           className="flex flex-col space-y-2"
-          onSubmit={async (e) => {
+          onSubmit={(e) => {
             e.preventDefault();
-            const httpStatus = await updateEventApi(
-              token,
-              title,
-              content,
-              date,
-              event.id,
-              image
-            );
-            httpStatus === 200 ? setEditPageState(3) : setEditPageState(4);
           }}
         >
           <div className="flex flex-col">
@@ -100,7 +91,20 @@ export const EditEvent = ({ event, token }: Props) => {
             />
           </div>
           <div className="flex space-x-3">
-            <button className="rounded-lg bg-teal-200 py-1 px-3" type="submit">
+            <button
+              className="rounded-lg bg-teal-200 py-1 px-3"
+              onClick={async () => {
+                const httpStatus = await updateEventApi(
+                  token,
+                  title,
+                  content,
+                  date,
+                  event.id,
+                  image
+                );
+                httpStatus === 200 ? setEditPageState(3) : setEditPageState(4);
+              }}
+            >
               Update
             </button>
             <Link href="/admin">
