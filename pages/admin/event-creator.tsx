@@ -20,7 +20,7 @@ const CreateEvent = ({ token }: { token: string }) => {
 
   return (
     <>
-      <h1 className="text-3xl font-bold my-10">Create a new event</h1>
+      <h1 className="text-3xl font-bold mb-5">Create a new event</h1>
       {eventCreated && (
         <div className="my-3 text-green-700 font-semibold">
           Event has been successfully created

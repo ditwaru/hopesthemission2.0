@@ -27,7 +27,7 @@ export const AdminPagination = ({ contents, amount, setPostIndex }: Props) => {
   };
 
   return (
-    <nav className="flex justify-between w-screen max-w-lg">
+    <nav className="flex justify-between">
       <button
         className={`ml-5 ${
           pageIndex === 1 ? 'opacity-50 point-events-none' : ''

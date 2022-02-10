@@ -10,7 +10,7 @@ type Props = {
 
 const Layout = ({ children }: Props) => {
   return (
-    <div className="flex justify-center items-center relative min-h-screen bg-teal-100">
+    <div className="relative min-h-screen bg-teal-100">
       <Head>
         <title>Hope's the Mission</title>
         <meta charSet="utf-8" />
@@ -19,7 +19,7 @@ const Layout = ({ children }: Props) => {
       <header>
         <Navbar />
       </header>
-      <main className="flex flex-col justify-center items-center font-patrickHand">
+      <main className="font-patrickHand pt-20 pb-16 w-11/12 max-w-lg mx-auto">
         {children}
       </main>
       <Footer />

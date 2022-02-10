@@ -1,7 +1,8 @@
-import { GetServerSideProps, NextPage } from 'next';
+import { GetServerSideProps } from 'next';
 import { deleteEventApi } from 'pages/api/events/deleteEventApi';
 import { updateEventApi } from 'pages/api/events/updateEventApi';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
     body: string;
     date: string;
     id: string;
+    imageURL: string;
   };
   token: string;
 }
@@ -19,6 +21,13 @@ export const EditEvent = ({ event, token }: Props) => {
   const [title, setTitle] = useState(event.title);
   const [content, setContent] = useState(event.body);
   const [date, setDate] = useState(event.date.split('T')[0]);
+  const [image, setImage] = useState<File>();
+  const uploadFile = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      setImage(file);
+    }
+  };
 
   if (editPageState === 0)
     return (
@@ -26,7 +35,18 @@ export const EditEvent = ({ event, token }: Props) => {
         <h1 className="text-3xl font-bold my-10">Event editor</h1>
         <form
           className="flex flex-col space-y-2"
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const httpStatus = await updateEventApi(
+              token,
+              title,
+              content,
+              date,
+              event.id,
+              image
+            );
+            httpStatus === 200 ? setEditPageState(3) : setEditPageState(4);
+          }}
         >
           <div className="flex flex-col">
             <label htmlFor="title">Title</label>
@@ -48,7 +68,6 @@ export const EditEvent = ({ event, token }: Props) => {
               className="py-1 px-3 rounded-lg border"
               value={date}
               onChange={(e) => {
-                console.log(e.target.value);
                 setDate(e.target.value);
               }}
               required
@@ -67,19 +86,21 @@ export const EditEvent = ({ event, token }: Props) => {
               onChange={(e) => setContent(e.target.value)}
             />
           </div>
+          <div className="flex flex-col">
+            <label htmlFor="image">Current Image</label>
+            {event.imageURL && (
+              <Image src={event.imageURL} height="150" width="250" />
+            )}
+            <input
+              className={event.imageURL ? 'mt-2' : ''}
+              type="file"
+              name="image"
+              id="image"
+              onChange={uploadFile}
+            />
+          </div>
           <div className="flex space-x-3">
-            <button
-              className="rounded-lg bg-teal-200 py-1 px-3"
-              onClick={async () => {
-                const httpStatus = await updateEventApi(token, {
-                  title,
-                  body: content,
-                  date: date,
-                  id: event.id,
-                });
-                httpStatus === 200 ? setEditPageState(3) : setEditPageState(4);
-              }}
-            >
+            <button className="rounded-lg bg-teal-200 py-1 px-3" type="submit">
               Update
             </button>
             <Link href="/admin">

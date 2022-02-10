@@ -19,9 +19,7 @@ export const LoginForm = ({
       }}
     >
       <div className="flex flex-col">
-        <label className="" htmlFor="username">
-          Username
-        </label>
+        <label htmlFor="username">Username</label>
         <input
           onChange={(e) => setUsername(e.target.value)}
           className="py-1 px-3 rounded-lg border"

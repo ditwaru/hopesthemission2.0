@@ -16,7 +16,7 @@ const CreateBlog = ({ token }: { token: string }) => {
     }
   };
   return (
-    <>
+    <div>
       <h1 className="text-3xl font-bold my-10">Create a new blog</h1>
       {blogCreated && (
         <div className="my-3 text-green-700 font-semibold">
@@ -32,12 +32,12 @@ const CreateBlog = ({ token }: { token: string }) => {
             setBlogCreated(true);
           }
         }}
-        className="flex flex-col items-start space-y-2"
+        className="flex flex-col space-y-2"
       >
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col">
           <label htmlFor="title">Title</label>
           <input
-            className="py-1 px-3 rounded-lg border w-full"
+            className="py-1 px-3 rounded-lg border"
             type="text"
             name="title"
             id="title"
@@ -75,7 +75,7 @@ const CreateBlog = ({ token }: { token: string }) => {
           </Link>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 

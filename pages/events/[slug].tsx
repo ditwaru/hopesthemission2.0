@@ -12,14 +12,14 @@ interface Props {
 }
 const EventPage: NextPage<Props> = ({ event }) => {
   return (
-    <section className="w-full max-w-lg m-5">
+    <section>
       {event.imageURL && (
-        <div className="w-screen h-96 top-14 left-0 absolute">
+        <div className="relative w-full h-64">
           <Image
             src={event.imageURL}
             layout="fill"
-            objectFit="cover"
             objectPosition="center"
+            objectFit="cover"
             priority
           />
         </div>

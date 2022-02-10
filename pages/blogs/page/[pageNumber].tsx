@@ -15,9 +15,9 @@ interface Props {
 
 const BlogsPage: NextPage<Props> = ({ blogs, pageNumbers, currentPage }) => {
   return (
-    <>
-      <h1 className="text-5xl mt-5">Blogs 📑</h1>
-      <div className="w-screen m-5 max-w-lg space-y-5">
+    <div>
+      <h1 className="text-5xl mb-5 text-center">Blogs 📑</h1>
+      <div className="space-y-5">
         {blogs.map((blog) => (
           <BlogCard key={blog.id} blog={blog} slug={blog.slug} />
         ))}
@@ -27,7 +27,7 @@ const BlogsPage: NextPage<Props> = ({ blogs, pageNumbers, currentPage }) => {
           type="blogs"
         />
       </div>
-    </>
+    </div>
   );
 };
 

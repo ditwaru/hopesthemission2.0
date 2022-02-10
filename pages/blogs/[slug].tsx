@@ -13,19 +13,19 @@ interface Props {
 
 const BlogsPage: NextPage<Props> = ({ blog }) => {
   return (
-    <section className="max-w-lg w-full m-5">
-      <h1 className="font-bold text-4xl text-purple-600">{blog.title}</h1>
+    <section>
       {blog.imageURL && (
-        <div className="absolute w-48 h-48">
+        <div className="relative w-full h-64">
           <Image
             src={blog.imageURL}
             layout="fill"
-            objectFit="cover"
             objectPosition="center"
+            objectFit="cover"
             priority
           />
         </div>
       )}
+      <h1 className="font-bold text-4xl text-purple-600">{blog.title}</h1>
       <p className="mb-5 text-xs mt-2">
         Published: {dateConverter(blog.published)}
       </p>

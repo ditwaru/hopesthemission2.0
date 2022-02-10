@@ -16,10 +16,12 @@ interface Props {
 
 const EditBlogPage: NextPage<Props> = ({ token, blogs }) =>
   token ? (
-    <>
-      <h1 className="text-3xl font-bold my-10">Admin Blog Editor</h1>
+    <div>
+      <h1 className="text-3xl font-bold my-10 text-center">
+        Admin Blog Editor
+      </h1>
       <EditContent contents={blogs} Child={BlogCard} type="blog" />
-    </>
+    </div>
   ) : (
     <LoginRedirect />
   );

@@ -17,7 +17,6 @@ interface Props {
 
 const EditEvent: NextPage<Props> = ({ token, events }) => {
   {
-    console.log(events);
     return token ? (
       <>
         <h1 className="text-3xl font-bold my-10">Admin Events Editor</h1>

@@ -7,7 +7,7 @@ interface Props {
 
 export const Search = ({ searchText, setSearchText }: Props) => {
   return (
-    <div>
+    <div className="mb-5 text-center">
       <input
         className="py-1 px-3 rounded-lg border"
         type="text"

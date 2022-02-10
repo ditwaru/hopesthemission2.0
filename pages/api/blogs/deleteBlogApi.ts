@@ -6,6 +6,5 @@ export const deleteBlogApi = async (id: string, token: string) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(res.status);
   return res.status;
 };

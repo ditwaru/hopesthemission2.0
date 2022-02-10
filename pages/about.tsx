@@ -6,7 +6,7 @@ interface Props {
 }
 const AboutPage = ({ about }: Props) => {
   return (
-    <section className="max-w-lg w-full m-5 flex flex-col justify-center">
+    <section>
       <h1 className="text-4xl font-bold">{about.title}</h1>
       <p>{about.body}</p>
       {about.imageURL && (

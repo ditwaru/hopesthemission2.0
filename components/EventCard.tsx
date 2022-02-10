@@ -15,7 +15,7 @@ export const EventCard: React.FC<Props> = ({ event, slug }) => {
   return (
     <div
       key={event.id}
-      className="border rounded-lg p-2 bg-white filter shadow-lg md:hover:scale-110 transition-all duration-300 mx-5"
+      className="border rounded-lg p-2 bg-white filter shadow-lg md:hover:scale-110 transition-all duration-300"
     >
       <Link href={`/events/${slug}`}>
         <a>
@@ -32,7 +32,7 @@ export const EventCard: React.FC<Props> = ({ event, slug }) => {
               <div className="text-tiny bg-red-500 px-2 text-white font-bold rounded-t-sm+">
                 {monthConverter(dateArray[1])}
               </div>
-              <div className="">{dateArray[2]}</div>
+              <div>{dateArray[2]}</div>
             </div>
           </div>
         </a>

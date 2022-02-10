@@ -40,7 +40,7 @@ export const EditContent = ({ contents, Child, type }: Props) => {
   return (
     <>
       <Search searchText={searchText} setSearchText={setSearchText} />
-      <div className="w-screen m-5 max-w-lg space-y-5">
+      <div className="space-y-5">
         {arr.map((post) =>
           type === 'blog' ? (
             <Child key={post.id} blog={post} slug={`edit/${post.slug}`} />

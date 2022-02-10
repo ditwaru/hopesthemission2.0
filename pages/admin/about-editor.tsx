@@ -18,7 +18,7 @@ export const EditAbout = ({ about, token }: Props) => {
 
   if (editPageState === 0)
     return (
-      <>
+      <div>
         <h1 className="text-3xl font-bold my-10">About editor</h1>
         <form
           className="flex flex-col space-y-2"
@@ -28,7 +28,6 @@ export const EditAbout = ({ about, token }: Props) => {
               title,
               body: content,
             });
-            console.log(httpStatus);
             httpStatus === 200 ? setEditPageState(1) : setEditPageState(2);
           }}
         >
@@ -63,7 +62,7 @@ export const EditAbout = ({ about, token }: Props) => {
             </Link>
           </div>
         </form>
-      </>
+      </div>
     );
   if (editPageState > 0) {
     const states = [

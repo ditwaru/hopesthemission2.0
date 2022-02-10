@@ -18,8 +18,8 @@ interface Props {
 const EventsPage: NextPage<Props> = ({ events, pageNumbers, currentPage }) => {
   return (
     <>
-      <h1 className="text-5xl mt-5">Events 🗓</h1>
-      <div className="w-screen m-5 max-w-lg space-y-5">
+      <h1 className="text-5xl mb-5 text-center">Events 🗓</h1>
+      <div className="space-y-5">
         {events.map((event) => (
           <EventCard key={event.id} event={event} slug={event.slug} />
         ))}

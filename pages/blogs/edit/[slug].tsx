@@ -29,8 +29,8 @@ export const EditBlog = ({ blog, token }: Props) => {
 
   if (editPageState === 0)
     return (
-      <>
-        <h1 className="text-3xl font-bold my-10">Blog editor</h1>
+      <div>
+        <h1 className="text-3xl font-bold mb-10">Blog editor</h1>
         <form
           className="flex flex-col space-y-2"
           onSubmit={async (e) => {
@@ -104,7 +104,7 @@ export const EditBlog = ({ blog, token }: Props) => {
             </button>
           </div>
         </form>
-      </>
+      </div>
     );
   if (editPageState > 0) {
     const states = [
