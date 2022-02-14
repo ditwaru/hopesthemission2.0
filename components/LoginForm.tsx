@@ -10,7 +10,7 @@ export const LoginForm = ({
   const [password, setPassword] = useState('');
   return (
     <form
-      className="flex flex-col space-y-2"
+      className="flex flex-col space-y-2 max-w-xs mx-auto"
       onSubmit={async (e) => {
         e.preventDefault();
         const token = await loginApi(username, password);

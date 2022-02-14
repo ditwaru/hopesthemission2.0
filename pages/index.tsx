@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Home: NextPage<Props> = ({ home }) => {
-  // todo: social media page, dynamically import components, check for unused imports
+  // todo: social media page, dynamically import components, check for unused imports, SEO
   return (
     <div>
       <Head>
@@ -35,7 +35,7 @@ const Home: NextPage<Props> = ({ home }) => {
 
         <h1
           id="mainTitle"
-          className="sm:my-10 my-5 text-2xl sm:text-5xl font-bold relative z-10 text-transparent bg-clip-text bg-gradient-to-b from-white to-cyan-300 drop-shadow-2xl text-center"
+          className="sm:my-10 my-5 text-2xl sm:text-5xl font-bold relative z-10 text-transparent bg-clip-text bg-gradient-to-b from-white to-cyan-300 drop-shadow-2xl text-center md:whitespace-pre-wrap"
         >
           {home.title}
         </h1>
