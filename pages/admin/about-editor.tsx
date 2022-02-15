@@ -1,4 +1,4 @@
-import { GetServerSideProps, NextPage } from 'next';
+import { GetServerSideProps } from 'next';
 import { updateAboutApi } from 'pages/api/about/updateAboutApi';
 import { useState } from 'react';
 import Link from 'next/link';
