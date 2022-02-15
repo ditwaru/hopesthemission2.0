@@ -27,7 +27,9 @@ const EventPage: NextPage<Props> = ({ event }) => {
       <p className="text-semibold text-md text-red-700 mt-3">
         {dateConverter(event.date)}
       </p>
-      <h1 className="font-bold text-4xl text-red-700 mb-5">{event.title}</h1>
+      <h1 className="font-bold text-5xl text-red-700 mb-5 font-nanumPen">
+        {event.title}
+      </h1>
       <p className="whitespace-pre-wrap">{event.body}</p>
     </section>
   );

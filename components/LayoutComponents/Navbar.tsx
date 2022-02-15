@@ -2,19 +2,23 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import logo from '/public/logo.png';
+import logo from '/public/hope_icon.webp';
 
 export const Navbar = () => {
   const router = useRouter();
   const onHomePage = router.route === '/';
   return (
-    <nav className="h-14 flex items-center p-2 fixed z-20 top-0 left-0 right-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-orange-500 filter shadow-lg font-shadowsIntoLight sm:text-2xl">
+    <nav className="h-20 flex items-center p-2 fixed z-20 top-0 left-0 right-0 bg-white filter shadow-lg font-rockSalt text-xs xs:text-sm sm:text-2xl">
       <Link href="/">
         <a className="sm:mx-5 flex items-center">
-          <Image src={logo} height={35} width={35} />
+          <Image src={logo} height={133 / 2} width={120 / 2} />
         </a>
       </Link>
       <div className={onHomePage ? 'hidden' : ''}>
+        <Link href="/about">
+          <a>About</a>
+        </Link>{' '}
+        |{' '}
         <Link href="/blogs">
           <a>Blogs</a>
         </Link>{' '}
@@ -23,14 +27,9 @@ export const Navbar = () => {
           <a>Events</a>
         </Link>{' '}
         |{' '}
-        <Link href="/about">
-          <a>About</a>
+        <Link href="/social">
+          <a>Social Media</a>
         </Link>
-      </div>
-      <div className="absolute right-5 top-1/2 transform -translate-y-1/2">
-        <a href="/admin">
-          <p>Admin</p>
-        </a>
       </div>
     </nav>
   );

@@ -7,8 +7,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: '387px',
+      },
       colors: {
         darkTeal: '#b6cac9',
+        tomato: 'rgb(237,85,60)',
       },
       fontSize: {
         tiny: ['.50rem', '.75rem'],
@@ -17,8 +21,28 @@ module.exports = {
         'sm+': '.32rem',
       },
       fontFamily: {
-        shadowsIntoLight: ['Shadows Into Light Two'],
-        patrickHand: ['Patrick Hand'],
+        rockSalt: ['Rock Salt', 'cursive'],
+        nanumGothic: ['Nanum Gothic Coding', 'monospace'],
+        nanumPen: ['Nanum Pen Script', 'cursive'],
+      },
+      animation: {
+        slideLeft: '1s ease-out 0s 1 slideInFromLeft',
+        slideRight: '1s ease-out 0s 1 slideInFromRight',
+        fadeIn: '2s ease-out 0s 1 fade',
+      },
+      keyframes: {
+        slideInFromLeft: {
+          '0%': { transform: 'translateX(-100%)', opacity: 0 },
+          '100%': { transform: 'translateX(0%)', opacity: 1 },
+        },
+        slideInFromRight: {
+          '0%': { transform: 'translateX(100%)', opacity: 0 },
+          '100%': { transform: 'translateX(0%)', opacity: 1 },
+        },
+        fade: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
       },
     },
   },

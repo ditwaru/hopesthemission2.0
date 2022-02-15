@@ -16,20 +16,29 @@ interface Props {
 }
 
 const EventsPage: NextPage<Props> = ({ events, pageNumbers, currentPage }) => {
+  if (events.length > 0)
+    return (
+      <>
+        <h1 className="text-5xl my-5 text-center font-rockSalt">Events 🗓</h1>
+        <h3 className="text-center font-nanumPen text-4xl mb-5">
+          Come hang out with us
+        </h3>
+        <div className="space-y-5">
+          {events.map((event) => (
+            <EventCard key={event.id} event={event} slug={event.slug} />
+          ))}
+          <Pagination
+            pageNumbers={pageNumbers}
+            currentPage={currentPage}
+            type="events"
+          />
+        </div>
+      </>
+    );
   return (
-    <>
-      <h1 className="text-5xl mb-5 text-center">Events 🗓</h1>
-      <div className="space-y-5">
-        {events.map((event) => (
-          <EventCard key={event.id} event={event} slug={event.slug} />
-        ))}
-        <Pagination
-          pageNumbers={pageNumbers}
-          currentPage={currentPage}
-          type="events"
-        />
-      </div>
-    </>
+    <h1 className="text-3xl my-5 text-center font-rockSalt">
+      There are no upcoming events at this time
+    </h1>
   );
 };
 
