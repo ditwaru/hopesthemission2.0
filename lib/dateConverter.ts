@@ -5,5 +5,5 @@ export const dateConverter = (date: string) => {
     month: 'long',
     day: 'numeric',
   };
-  return new Date(date).toLocaleDateString('en-us', options);
+  return new Date(date + ' 00:00:00').toLocaleDateString('en-us', options);
 };

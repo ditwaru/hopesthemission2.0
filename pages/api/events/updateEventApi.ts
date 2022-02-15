@@ -3,21 +3,33 @@ import { cloudinaryRequest, mongoPutRequest } from 'lib/fetchRequests';
 export const updateEventApi = async (
   token: string,
   title: string,
-  body: string,
+  content: string,
   date: string,
   id: string,
-  image?: File
+  image: File | undefined
 ) => {
+  let imageURL: string;
+  const data = {
+    title,
+    body: content,
+    date,
+    id,
+  };
   if (image) {
-    return mongoPutRequest(
-      token,
-      title,
-      body,
-      id,
-      'events',
-      await cloudinaryRequest(image)
-    );
-  } else {
-    return mongoPutRequest(token, title, body, id, 'events');
+    imageURL = await cloudinaryRequest(image);
+    Object.assign(data, { imageURL });
   }
+
+  const body = JSON.stringify(data);
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/events`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body,
+  });
+
+  return res.status;
 };

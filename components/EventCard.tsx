@@ -21,10 +21,10 @@ export const EventCard: React.FC<Props> = ({ event, slug }) => {
         <a>
           <div className="flex justify-between items-center">
             <div>
-              <h2 className="font-semibold font-nanumPen text-3xl text-pink-700 w-56 whitespace-nowrap overflow-ellipsis overflow-hidden">
+              <h2 className="font-semibold font-nanumPen text-3xl text-pink-700 w-56 555px:w-full max-w-md whitespace-nowrap overflow-ellipsis overflow-hidden">
                 {event.title}
               </h2>
-              <p className="w-40 whitespace-nowrap overflow-ellipsis overflow-hidden">
+              <p className="w-40 555px:w-full max-w-md whitespace-nowrap overflow-ellipsis overflow-hidden">
                 {event.body}
               </p>
             </div>
