@@ -14,6 +14,7 @@ const AboutPage = ({ about }: Props) => {
   const [currentImage, setCurrentImage] = useState(
     about.bannerImages[Math.floor(Math.random() * 26)]
   );
+  console.log(about);
 
   useEffect(() => {
     const interval = setInterval(
@@ -41,7 +42,7 @@ const AboutPage = ({ about }: Props) => {
         </div>
       )}
       <h1 className="text-5xl font-bold font-nanumPen">{about.title}</h1>
-      <p>{about.body}</p>
+      <p className="whitespace-pre-wrap">{about.body}</p>
     </section>
   );
 };
