@@ -1,11 +1,8 @@
-export const dateConverter = (date: string) => {
-  const dateArray = date.split('-');
-  console.log(dateArray);
-  const formattedDate = new Date(
-    +dateArray[0],
-    +dateArray[1] - 1,
-    +dateArray[2]
-  ).toDateString();
+export const dateConverter = (dateNumber: number) => {
+  const date = new Date(dateNumber);
+  const arr = date.toString().split(' ');
+
+  const formattedDate = `${arr[0]} ${arr[1]} ${arr[2]}, ${arr[3]}`;
 
   return formattedDate;
 };

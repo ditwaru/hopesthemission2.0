@@ -14,7 +14,6 @@ const AboutPage = ({ about }: Props) => {
   const [currentImage, setCurrentImage] = useState(
     about.bannerImages[Math.floor(Math.random() * 26)]
   );
-  console.log(about);
 
   useEffect(() => {
     const interval = setInterval(

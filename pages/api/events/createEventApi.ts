@@ -4,7 +4,7 @@ export const createEventApi = async (
   token: string,
   title: string,
   content: string,
-  date: string,
+  date: number,
   image: File | undefined
 ) => {
   let imageURL: string;

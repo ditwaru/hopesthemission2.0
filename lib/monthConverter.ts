@@ -1,33 +1,18 @@
-export const monthConverter = (date: string) => {
-  if (
-    date === '01' ||
-    date === '02' ||
-    date === '03' ||
-    date === '04' ||
-    date === '05' ||
-    date === '06' ||
-    date === '07' ||
-    date === '08' ||
-    date === '09' ||
-    date === '10' ||
-    date === '11' ||
-    date === '12'
-  ) {
-    const months = {
-      '01': 'JAN',
-      '02': 'FEB',
-      '03': 'MAR',
-      '04': 'APR',
-      '05': 'MAY',
-      '06': 'JUN',
-      '07': 'JUL',
-      '08': 'AUG',
-      '09': 'SEP',
-      '10': 'OCT',
-      '11': 'NOV',
-      '12': 'DEC',
-    };
+export const monthConverter = (date: number) => {
+  const months: { [key: number]: string } = {
+    0: 'JAN',
+    1: 'FEB',
+    2: 'MAR',
+    3: 'APR',
+    4: 'MAY',
+    5: 'JUN',
+    6: 'JUL',
+    7: 'AUG',
+    8: 'SEP',
+    9: 'OCT',
+    10: 'NOV',
+    11: 'DEC',
+  };
 
-    return months[date];
-  }
+  return months[date];
 };

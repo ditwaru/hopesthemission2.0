@@ -11,7 +11,8 @@ interface Props {
   slug: string;
 }
 export const EventCard: React.FC<Props> = ({ event, slug }) => {
-  const dateArray = event.date.split('T')[0].split('-');
+  const date = new Date(event.date);
+
   return (
     <div
       key={event.id}
@@ -30,9 +31,9 @@ export const EventCard: React.FC<Props> = ({ event, slug }) => {
             </div>
             <div className="flex flex-col items-center rounded-md border">
               <div className="text-tiny bg-red-500 px-2 text-white font-bold rounded-t-sm+">
-                {monthConverter(dateArray[1])}
+                {monthConverter(date.getMonth())}
               </div>
-              <div>{dateArray[2]}</div>
+              <div>{date.getDate()}</div>
             </div>
           </div>
         </a>

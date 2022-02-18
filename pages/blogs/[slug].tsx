@@ -6,7 +6,7 @@ interface Props {
   blog: {
     imageURL?: string;
     title: string;
-    published: string;
+    published: number;
     body: string;
   };
 }

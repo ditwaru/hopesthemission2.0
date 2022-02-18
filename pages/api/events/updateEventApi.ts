@@ -4,7 +4,7 @@ export const updateEventApi = async (
   token: string,
   title: string,
   content: string,
-  date: string,
+  date: number,
   id: string,
   image: File | undefined
 ) => {
