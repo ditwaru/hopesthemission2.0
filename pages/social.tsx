@@ -5,12 +5,12 @@ const SocialPage: NextPage = () => {
     <>
       <NextSeo
         title={`Social Media - Hope's The Mission`}
-        description="This hope is a strong and trustworthy anchor for our souls. It leads us through the curtain into God’s inner sanctuary."
+        description="This hope is a strong and trustworthy anchor for our souls."
         openGraph={{
           url: `https://www.hopesthemission.com/social`,
           title: "Social Media - Hope's The Mission",
           description:
-            'This hope is a strong and trustworthy anchor for our souls. It leads us through the curtain into God’s inner sanctuary.',
+            'This hope is a strong and trustworthy anchor for our souls.',
           images: [
             {
               url: '/public/logo.png',

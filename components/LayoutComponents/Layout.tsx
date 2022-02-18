@@ -17,12 +17,6 @@ const Layout = ({ children }: Props) => {
         <title>Hope's the Mission</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta property="og:image" content="/public/logo.png" />
-        <meta
-          property="description"
-          content="This hope is a strong and trustworthy anchor for our souls. It leads us through the curtain into God’s inner sanctuary."
-        />
-        ,
       </Head>
       <header>
         <Navbar />

@@ -17,12 +17,12 @@ const EventPage: NextPage<Props> = ({ event }) => {
     <>
       <NextSeo
         title={`${event.title} - Hope's The Mission`}
-        description="This hope is a strong and trustworthy anchor for our souls. It leads us through the curtain into God’s inner sanctuary."
+        description="This hope is a strong and trustworthy anchor for our souls."
         openGraph={{
           url: `https://www.hopesthemission.com/${event.slug}`,
           title: event.title,
           description:
-            'This hope is a strong and trustworthy anchor for our souls. It leads us through the curtain into God’s inner sanctuary.',
+            'This hope is a strong and trustworthy anchor for our souls.',
           images: [
             {
               url: event.imageURL ?? '/public/logo.png',

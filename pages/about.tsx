@@ -29,12 +29,12 @@ const AboutPage = ({ about }: Props) => {
     <>
       <NextSeo
         title={`About - Hope's The Mission`}
-        description="This hope is a strong and trustworthy anchor for our souls. It leads us through the curtain into God’s inner sanctuary."
+        description="This hope is a strong and trustworthy anchor for our souls."
         openGraph={{
           url: `https://www.hopesthemission.com/about`,
           title: 'About',
           description:
-            'This hope is a strong and trustworthy anchor for our souls. It leads us through the curtain into God’s inner sanctuary.',
+            'This hope is a strong and trustworthy anchor for our souls.',
           images: [
             {
               url: currentImage.url ?? '/public/logo.png',

@@ -18,12 +18,12 @@ const BlogsPage: NextPage<Props> = ({ blog }) => {
     <>
       <NextSeo
         title={`${blog.title} - Hope's The Mission`}
-        description="This hope is a strong and trustworthy anchor for our souls. It leads us through the curtain into God’s inner sanctuary."
+        description="This hope is a strong and trustworthy anchor for our souls."
         openGraph={{
           url: `https://www.hopesthemission.com/${blog.slug}`,
           title: blog.title,
           description:
-            'This hope is a strong and trustworthy anchor for our souls. It leads us through the curtain into God’s inner sanctuary.',
+            'This hope is a strong and trustworthy anchor for our souls.',
           images: [
             {
               url: blog.imageURL ?? '/public/logo.png',
