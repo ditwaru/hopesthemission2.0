@@ -20,7 +20,7 @@ export const EditEvent = ({ event, token }: Props) => {
   const [editPageState, setEditPageState] = useState(0);
   const [title, setTitle] = useState(event.title);
   const [content, setContent] = useState(event.body);
-  const [date, setDate] = useState(0);
+  const [date, setDate] = useState(new Date(event.date).getTime());
   const [image, setImage] = useState<File>();
   const uploadFile = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -57,9 +57,10 @@ export const EditEvent = ({ event, token }: Props) => {
               name="date"
               id="date"
               className="py-1 px-3 rounded-lg border"
-              value={date}
+              value={new Date(date).toISOString().split('T')[0]}
               onChange={(e) => {
-                setDate(new Date(e.target.value).getTime());
+                const [year, month, day] = e.target.value.split('-');
+                setDate(new Date(+year, +month - 1, +day).getTime());
               }}
               required
             />

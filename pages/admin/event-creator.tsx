@@ -8,7 +8,7 @@ const CreateEvent = ({ token }: { token: string }) => {
   const [eventCreated, setEventCreated] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+  const [date, setDate] = useState(new Date().getTime());
   const [image, setImage] = useState<File>();
 
   const uploadFile = (e: ChangeEvent<HTMLInputElement>) => {
@@ -55,8 +55,11 @@ const CreateEvent = ({ token }: { token: string }) => {
             name="date"
             id="date"
             className="py-1 px-3 rounded-lg border"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+            value={new Date(date).toISOString().split('T')[0]}
+            onChange={(e) => {
+              const [year, month, day] = e.target.value.split('-');
+              setDate(new Date(+year, +month - 1, +day).getTime());
+            }}
             required
           />
         </div>
