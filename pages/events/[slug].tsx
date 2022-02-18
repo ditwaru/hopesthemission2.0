@@ -25,7 +25,7 @@ const EventPage: NextPage<Props> = ({ event }) => {
             'This hope is a strong and trustworthy anchor for our souls.',
           images: [
             {
-              url: event.imageURL ?? '/public/logo.png',
+              url: event.imageURL ?? (process.env.NEXT_PUBLIC_LOGO_URL || ''),
               alt: "Hope's the mission image",
             },
           ],

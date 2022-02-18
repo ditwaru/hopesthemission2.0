@@ -26,7 +26,7 @@ const BlogsPage: NextPage<Props> = ({ blog }) => {
             'This hope is a strong and trustworthy anchor for our souls.',
           images: [
             {
-              url: blog.imageURL ?? '/public/logo.png',
+              url: blog.imageURL ?? (process.env.NEXT_PUBLIC_LOGO_URL || ''),
               alt: "Hope's the mission image",
             },
           ],
