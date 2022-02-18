@@ -9,6 +9,7 @@ interface Props {
     date: number;
     title: string;
     body: string;
+    slug: string;
   };
 }
 const EventPage: NextPage<Props> = ({ event }) => {
