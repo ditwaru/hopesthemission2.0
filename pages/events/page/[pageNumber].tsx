@@ -2,6 +2,7 @@ import { EventCard } from 'components/EventCard';
 import { Pagination } from 'components/Pagination';
 import { filterOldEvents } from 'lib/filterOldEvents';
 import { GetStaticPaths, NextPage } from 'next';
+import { NextSeo } from 'next-seo';
 
 interface Props {
   events: {
@@ -19,6 +20,27 @@ const EventsPage: NextPage<Props> = ({ events, pageNumbers, currentPage }) => {
   if (events.length > 0)
     return (
       <>
+        <NextSeo
+          title={`Events - Hope's The Mission`}
+          description="This hope is a strong and trustworthy anchor for our souls. It leads us through the curtain into God’s inner sanctuary."
+          openGraph={{
+            url: `https://www.hopesthemission.com/events/page/${currentPage}`,
+            title: "Events - Hope's The Mission",
+            description:
+              'This hope is a strong and trustworthy anchor for our souls. It leads us through the curtain into God’s inner sanctuary.',
+            images: [
+              {
+                url: '/public/logo.png',
+                alt: "Hope's the mission image",
+              },
+            ],
+          }}
+          twitter={{
+            handle: '@handle',
+            site: '@site',
+            cardType: 'summary_large_image',
+          }}
+        />
         <h1 className="text-5xl my-5 text-center font-rockSalt">Events 🗓</h1>
         <h3 className="text-center font-nanumPen text-4xl mb-5">
           Come hang out with us

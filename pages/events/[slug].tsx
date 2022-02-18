@@ -1,5 +1,6 @@
 import { dateConverter } from 'lib/dateConverter';
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
+import { NextSeo } from 'next-seo';
 import Image from 'next/image';
 
 interface Props {
@@ -12,26 +13,49 @@ interface Props {
 }
 const EventPage: NextPage<Props> = ({ event }) => {
   return (
-    <section>
-      {event.imageURL && (
-        <div className="relative w-full h-64">
-          <Image
-            src={event.imageURL}
-            layout="fill"
-            objectPosition="center"
-            objectFit="cover"
-            priority
-          />
-        </div>
-      )}
-      <p className="text-semibold text-md text-red-700 mt-3">
-        {dateConverter(event.date)}
-      </p>
-      <h1 className="font-bold text-5xl text-red-700 mb-5 font-nanumPen">
-        {event.title}
-      </h1>
-      <p className="whitespace-pre-wrap">{event.body}</p>
-    </section>
+    <>
+      <NextSeo
+        title={`${event.title} - Hope's The Mission`}
+        description="This hope is a strong and trustworthy anchor for our souls. It leads us through the curtain into God’s inner sanctuary."
+        openGraph={{
+          url: `https://www.hopesthemission.com/${event.slug}`,
+          title: event.title,
+          description:
+            'This hope is a strong and trustworthy anchor for our souls. It leads us through the curtain into God’s inner sanctuary.',
+          images: [
+            {
+              url: event.imageURL ?? '/public/logo.png',
+              alt: "Hope's the mission image",
+            },
+          ],
+        }}
+        twitter={{
+          handle: '@handle',
+          site: '@site',
+          cardType: 'summary_large_image',
+        }}
+      />
+      <section>
+        {event.imageURL && (
+          <div className="relative w-full h-64">
+            <Image
+              src={event.imageURL}
+              layout="fill"
+              objectPosition="center"
+              objectFit="cover"
+              priority
+            />
+          </div>
+        )}
+        <p className="text-semibold text-md text-red-700 mt-3">
+          {dateConverter(event.date)}
+        </p>
+        <h1 className="font-bold text-5xl text-red-700 mb-5 font-nanumPen">
+          {event.title}
+        </h1>
+        <p className="whitespace-pre-wrap">{event.body}</p>
+      </section>
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 import { GetStaticPaths, NextPage } from 'next';
 import { BlogCard } from 'components/BlogCard';
 import { Pagination } from 'components/Pagination';
+import { NextSeo } from 'next-seo';
 
 interface Props {
   blogs: {
@@ -15,22 +16,45 @@ interface Props {
 
 const BlogsPage: NextPage<Props> = ({ blogs, pageNumbers, currentPage }) => {
   return (
-    <div>
-      <h1 className="text-5xl text-center font-rockSalt mt-5">Blogs 📑</h1>
-      <h3 className="text-center font-nanumPen text-4xl  my-5">
-        Random thoughts and rants
-      </h3>
-      <div className="space-y-5">
-        {blogs.map((blog) => (
-          <BlogCard key={blog.id} blog={blog} slug={blog.slug} />
-        ))}
-        <Pagination
-          pageNumbers={pageNumbers}
-          currentPage={currentPage}
-          type="blogs"
-        />
+    <>
+      <NextSeo
+        title={`Blogs - Hope's The Mission`}
+        description="This hope is a strong and trustworthy anchor for our souls. It leads us through the curtain into God’s inner sanctuary."
+        openGraph={{
+          url: `https://www.hopesthemission.com/blogs/page/${currentPage}`,
+          title: "Blogs - Hope's The Mission",
+          description:
+            'This hope is a strong and trustworthy anchor for our souls. It leads us through the curtain into God’s inner sanctuary.',
+          images: [
+            {
+              url: '/public/logo.png',
+              alt: "Hope's the mission image",
+            },
+          ],
+        }}
+        twitter={{
+          handle: '@handle',
+          site: '@site',
+          cardType: 'summary_large_image',
+        }}
+      />
+      <div>
+        <h1 className="text-5xl text-center font-rockSalt mt-5">Blogs 📑</h1>
+        <h3 className="text-center font-nanumPen text-4xl  my-5">
+          Random thoughts and rants
+        </h3>
+        <div className="space-y-5">
+          {blogs.map((blog) => (
+            <BlogCard key={blog.id} blog={blog} slug={blog.slug} />
+          ))}
+          <Pagination
+            pageNumbers={pageNumbers}
+            currentPage={currentPage}
+            type="blogs"
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
