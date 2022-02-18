@@ -20,7 +20,7 @@ const BlogsPage: NextPage<Props> = ({ blog }) => {
         title={`${blog.title} - Hope's The Mission`}
         description="This hope is a strong and trustworthy anchor for our souls."
         openGraph={{
-          url: `https://www.hopesthemission.com/${blog.slug}`,
+          url: `https://www.hopesthemission.com/blogs/${blog.slug}`,
           title: blog.title,
           description:
             'This hope is a strong and trustworthy anchor for our souls.',

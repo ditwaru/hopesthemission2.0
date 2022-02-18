@@ -19,7 +19,7 @@ const EventPage: NextPage<Props> = ({ event }) => {
         title={`${event.title} - Hope's The Mission`}
         description="This hope is a strong and trustworthy anchor for our souls."
         openGraph={{
-          url: `https://www.hopesthemission.com/${event.slug}`,
+          url: `https://www.hopesthemission.com/events/${event.slug}`,
           title: event.title,
           description:
             'This hope is a strong and trustworthy anchor for our souls.',
