@@ -1,43 +1,61 @@
 import { GetServerSideProps } from "next";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 import useApiRequests from "hooks/useApiRequests";
 import useCookies from "hooks/useCookies";
 import useStaticHooks from "hooks/useStaticHooks";
 import { S3Modal } from "components/admin/S3Modal";
 import { EditorForm } from "components/admin/EditorForm";
+import { FormBody, getBody } from "components/admin/FormBody";
+import { DateInput } from "components/admin/EditorInputs";
+import { ResponseMessages } from "components/admin/ResponseMessages";
+import { eventCreationResponseMessages } from "components/admin/MessagesArrays";
 
 const CreateEvent = ({ token, s3ImageUrls }: { token: string; s3ImageUrls: string[] }) => {
-  const [imageFile, setImageFile] = useState<File | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedS3Image, setSelectedS3Image] = useState("");
-  const [date, setDate] = useState(new Date().getTime().toString());
-  const [created, setCreated] = useState(false);
+  const [eventCreationState, setEventCreationState] = useState(0);
+  const [formBody, setFormBody] = useState<FormBody>({
+    title: "",
+    content: "",
+    imageUrl: "",
+    date: new Date().getTime().toString(),
+    published: "",
+    imageFile: null,
+  });
+
+  const { genericRequest } = useApiRequests();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await genericRequest({
+        method: "post",
+        path: "blogs",
+        body: getBody(formBody),
+        token,
+      });
+      setEventCreationState(1);
+    } catch (error) {
+      console.error(error);
+      setEventCreationState(2);
+    }
+  };
 
   return (
     <>
-      {modalIsOpen && (
-        <S3Modal
-          s3ImageUrls={s3ImageUrls}
-          setImageFile={setImageFile}
-          setModalIsOpen={setModalIsOpen}
-          setSelectedS3Image={setSelectedS3Image}
-        />
-      )}
-      <h1 className="text-3xl font-bold my-10">Create a new Event</h1>
+      {modalIsOpen && <S3Modal s3ImageUrls={s3ImageUrls} setFormBody={setFormBody} setModalIsOpen={setModalIsOpen} />}
+      <h1 className="text-3xl font-bold my-10">Create a new blog</h1>
       <EditorForm
-        created={created}
-        imageFile={imageFile}
-        selectedS3Image={selectedS3Image}
-        setCreated={setCreated}
-        setImageFile={setImageFile}
+        created={eventCreationState === 1}
+        handleSubmit={handleSubmit}
+        formBody={formBody}
+        setFormBody={setFormBody}
         setModalIsOpen={setModalIsOpen}
-        setSelectedS3Image={setSelectedS3Image}
-        date={date}
-        setDate={setDate}
-        token={token}
-      />
-      {created && <div className="my-3 text-green-700 font-semibold">Event has been successfully created</div>}
+        disableS3Button={s3ImageUrls.length === 0}
+      >
+        <DateInput date={formBody.date} setDate={setFormBody} />
+      </EditorForm>
+      <ResponseMessages messages={eventCreationResponseMessages} state={eventCreationState} />
     </>
   );
 };

@@ -59,7 +59,6 @@ export const getStaticPaths = async () => {
     return getCommonPathsForSingleItems("blogs");
   } catch (error) {
     console.error(error);
-    redirect("404");
   }
 };
 

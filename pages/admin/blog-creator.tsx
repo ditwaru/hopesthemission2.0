@@ -1,40 +1,58 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { GetServerSideProps } from "next";
 import useCookies from "hooks/useCookies";
 import useApiRequests from "hooks/useApiRequests";
 import useStaticHooks from "hooks/useStaticHooks";
 import { S3Modal } from "components/admin/S3Modal";
 import { EditorForm } from "components/admin/EditorForm";
+import { FormBody, getBody } from "components/admin/FormBody";
+import { ResponseMessages } from "components/admin/ResponseMessages";
+import { blogCreationResponseMessages } from "components/admin/MessagesArrays";
 
 const CreateBlog = ({ token, s3ImageUrls }: { token: string; s3ImageUrls: string[] }) => {
-  const [imageFile, setImageFile] = useState<File | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedS3Image, setSelectedS3Image] = useState("");
-  const [created, setCreated] = useState(false);
+  const [blogCreationState, setblogCreationState] = useState(0);
+  const [formBody, setFormBody] = useState<FormBody>({
+    title: "",
+    content: "",
+    imageUrl: "",
+    date: "",
+    published: "",
+    imageFile: null,
+  });
+
+  const { genericRequest } = useApiRequests();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const res = await genericRequest({
+        method: "post",
+        path: "blogs",
+        body: getBody(formBody),
+        token,
+      });
+      setblogCreationState(1);
+    } catch (error) {
+      console.error(error);
+      setblogCreationState(2);
+    }
+  };
 
   return (
     <>
-      {modalIsOpen && (
-        <S3Modal
-          s3ImageUrls={s3ImageUrls}
-          setImageFile={setImageFile}
-          setModalIsOpen={setModalIsOpen}
-          setSelectedS3Image={setSelectedS3Image}
-        />
-      )}
+      {modalIsOpen && <S3Modal s3ImageUrls={s3ImageUrls} setFormBody={setFormBody} setModalIsOpen={setModalIsOpen} />}
       <h1 className="text-3xl font-bold my-10">Create a new blog</h1>
       <EditorForm
-        created={created}
-        imageFile={imageFile}
-        selectedS3Image={selectedS3Image}
-        setCreated={setCreated}
-        setImageFile={setImageFile}
+        created={blogCreationState === 1}
+        handleSubmit={handleSubmit}
+        formBody={formBody}
+        setFormBody={setFormBody}
         setModalIsOpen={setModalIsOpen}
-        setSelectedS3Image={setSelectedS3Image}
         disableS3Button={s3ImageUrls.length === 0}
-        token={token}
       />
-      {created && <div className="my-3 text-green-700 font-semibold">Post has been successfully created</div>}
+      <ResponseMessages messages={blogCreationResponseMessages} state={blogCreationState} />
     </>
   );
 };

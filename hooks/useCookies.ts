@@ -36,7 +36,7 @@ const getToken = async (
 
       return accessToken;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

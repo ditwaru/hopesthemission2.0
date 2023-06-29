@@ -1,18 +1,17 @@
 import useApiRequests from "./useApiRequests";
-import useFiles from "./useFiles";
+
 import { GetStaticPathsResult, GetStaticPropsResult } from "next";
 
 const LOGIN_URL = process.env.NEXT_PUBLIC_LOGIN;
+const BUCKET_NAME = process.env.NEXT_PUBLIC_BUCKET_NAME;
 
 const getCommonPathsForSingleItems = async (category: string): Promise<GetStaticPathsResult> => {
-  const { writeParamsFile } = useFiles();
   const { getItemsByCategory } = useApiRequests();
   const { data } = await getItemsByCategory(category);
   const paths = data.map(({ slug, id }: { slug: string; id: string }) => {
-    const params = { slug, id };
+    const params = { slug, id, category };
     return { params };
   });
-  await writeParamsFile(paths);
   return {
     paths,
     fallback: "blocking",
@@ -24,14 +23,12 @@ const getCommonPropsForSingleItems = async (
   category: string
 ): Promise<GetStaticPropsResult<{ [key: string]: unknown }>> => {
   try {
-    const { getParamsData, deleteTmpFile } = useFiles();
-    const { getItemById } = useApiRequests();
-    const fileData = await getParamsData();
-    const {
-      params: { id },
-    } = fileData?.find(({ params }: { params: { slug: string } }) => params.slug === slug);
-    const { data } = await getItemById(category, id);
-    await deleteTmpFile();
+    const { getItemById, getItemsByCategory } = useApiRequests();
+    const { data: items } = await getItemsByCategory(category);
+    const search = items?.find((item: { slug: string }) => item.slug === slug);
+
+    const { data } = await getItemById(category, search.id);
+
     return {
       props: {
         [category.substring(0, category.length - 1)]: data, // so blogs will return as blog
@@ -39,13 +36,15 @@ const getCommonPropsForSingleItems = async (
       revalidate: 30,
     };
   } catch (err) {
-    console.log(err);
-    return redirect("404"); // this is necessary so blogs not paths not rendered by getStaticPaths don't fail on this function
+    console.error(err);
   }
+
+  return {
+    props: {},
+  };
 };
 
 const getCommonPathsForCategory = async (category: string) => {
-  const { writeParamsFile } = useFiles();
   const { getItemsByCategory } = useApiRequests();
 
   const { data } = await getItemsByCategory(category);
@@ -55,7 +54,6 @@ const getCommonPathsForCategory = async (category: string) => {
     return { params };
   }); //this convoluted thing just makes a new array with a length of ${total} / ${limit}
 
-  writeParamsFile(paths);
   return {
     paths,
     fallback: "blocking",
@@ -63,18 +61,21 @@ const getCommonPathsForCategory = async (category: string) => {
 };
 
 const getCommonPropsForCategory = async (category: string, pageNumber: string) => {
-  const { getParamsData, deleteTmpFile } = useFiles();
   const { getItemsByCategory } = useApiRequests();
-
-  const fileData = await getParamsData();
-  const pageNumbers = fileData.length;
   const { data } = await getItemsByCategory(`${category}?page=${pageNumber}`);
-
-  deleteTmpFile();
+  const { data: allcategories } = await getItemsByCategory(category);
+  const pageNumbers = Math.ceil(allcategories.length / 5);
   return {
-    props: { [category]: data, pageNumbers, currentPage: +pageNumber },
+    props: { [category]: data, pageNumbers: pageNumbers, currentPage: +pageNumber },
     revalidate: 30,
   };
+};
+
+const getArrayFromS3Urls = async (token: string) => {
+  const { getS3Urls } = useApiRequests();
+  const { data } = await getS3Urls(token);
+  if (!BUCKET_NAME) throw new Error("Bucket name undefined");
+  return data?.map((key: string) => `https://${BUCKET_NAME}.s3.amazonaws.com/${key}`) || null;
 };
 
 const redirectToLogin = async () => ({
@@ -97,6 +98,7 @@ const useStaticHooks = () => ({
   getCommonPropsForSingleItems,
   getCommonPathsForCategory,
   getCommonPropsForCategory,
+  getArrayFromS3Urls,
   redirectToLogin,
   redirect,
 });

@@ -33,7 +33,12 @@ export const EditContent = ({ contents, Child, type }: Props) => {
 
   return (
     <>
-      <Search searchText={searchText} setSearchText={setSearchText} />
+      <div className="flex justify-between items-center">
+        <Search searchText={searchText} setSearchText={setSearchText} />
+        <Link href="/admin">
+          <a className="rounded-lg bg-gray-200 py-1 mb-5 px-3 hover:bg-gray-300">Cancel</a>
+        </Link>
+      </div>
       <div className="space-y-5">
         {arr.map((post) =>
           type === "blog" ? (
@@ -44,9 +49,6 @@ export const EditContent = ({ contents, Child, type }: Props) => {
         )}
         <AdminPagination contents={filteredSearchPosts} amount={amount} setPostIndex={setPostIndex} />
       </div>
-      <Link href="/admin">
-        <a className="border rounded-lg bg-gray-200 py-1 px-3">Cancel</a>
-      </Link>
     </>
   );
 };

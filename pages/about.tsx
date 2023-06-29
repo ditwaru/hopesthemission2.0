@@ -1,5 +1,4 @@
 import useApiRequests from "hooks/useApiRequests";
-import useFiles from "hooks/useFiles";
 import useStaticHooks from "hooks/useStaticHooks";
 import { GetStaticProps } from "next";
 import { NextSeo } from "next-seo";
@@ -12,14 +11,17 @@ interface Props {
   bannerImages: string[];
 }
 const AboutPage = ({ content, title, bannerImages }: Props) => {
-  const [currentImage, setCurrentImage] = useState(bannerImages[Math.floor(Math.random() * 3)]);
+  const [imageIndex, setImageIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => setCurrentImage(bannerImages[0]), 8000);
+    const interval = setInterval(() => {
+      const index = imageIndex === bannerImages.length - 1 ? 0 : imageIndex + 1;
+      return setImageIndex(index);
+    }, 5000);
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [imageIndex]);
 
   return (
     <>
@@ -32,7 +34,7 @@ const AboutPage = ({ content, title, bannerImages }: Props) => {
           description: "This hope is a strong and trustworthy anchor for our souls.",
           images: [
             {
-              url: currentImage ?? (process.env.NEXT_PUBLIC_LOGO_URL || ""),
+              url: bannerImages[imageIndex] ?? (process.env.NEXT_PUBLIC_LOGO_URL || ""),
               alt: "Hope's the mission image",
             },
           ],
@@ -46,10 +48,10 @@ const AboutPage = ({ content, title, bannerImages }: Props) => {
       <section>
         {bannerImages.length > 0 && (
           <div
-            key={currentImage}
+            key={bannerImages[imageIndex]}
             className="absolute top-24 left-0 transform translate-x-1/2 opacity-0 fade drop-shadow-xl w-1/2 max-w-screen-lg h-80"
           >
-            <Image src={currentImage} className="rounded-lg" layout="fill" objectFit="none" />
+            <Image src={bannerImages[imageIndex]} className="rounded-lg" layout="fill" objectFit="none" />
           </div>
         )}
         <h1 className="text-5xl font-bold font-nanumPen mt-80">{title}</h1>
@@ -62,7 +64,6 @@ const AboutPage = ({ content, title, bannerImages }: Props) => {
 export default AboutPage;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { writeImageFileFromURL } = useFiles();
   const { redirect } = useStaticHooks();
 
   try {
@@ -79,19 +80,16 @@ export const getStaticProps: GetStaticProps = async () => {
         return acc;
       }, []) || null;
 
-    const bannerImages = await Promise.all(
-      imageArray?.map(async (imageUrl) => {
-        await writeImageFileFromURL(imageUrl);
-        return `/about/${imageUrl.split("/about/")[1]}`;
-      })
-    );
-
+    // const bannerImages = imageArray?.map((imageUrl) => {
+    //   return `/about/${imageUrl.split("/about/")[1]}`;
+    // });
+    // TODO see if you can figure something out about downloading the files from s3 then displaying the downloaded images
     return {
-      props: { content, title, bannerImages },
+      props: { content, title, bannerImages: imageArray },
       revalidate: 30,
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return redirect("500");
   }
 };

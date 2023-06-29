@@ -1,147 +1,93 @@
 import { GetServerSideProps } from "next";
-import { ChangeEvent, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
+import { ChangeEvent, FormEvent, useState } from "react";
 import useStaticHooks from "hooks/useStaticHooks";
 import useApiRequests from "hooks/useApiRequests";
 import useCookies from "hooks/useCookies";
+import { ResponseMessages } from "components/admin/ResponseMessages";
+import { blogUpdateResponseMessages, blogDeletionResponseMessages } from "components/admin/MessagesArrays";
+import { FormBody, getBody } from "components/admin/FormBody";
+import { EditorForm } from "components/admin/EditorForm";
+import { S3Modal } from "components/admin/S3Modal";
 
 interface Props {
   blog: {
     title: string;
     content: string;
-    id: string;
     imageUrl?: string;
+    id: string;
+    published: string;
   };
+  s3ImageUrls: string[];
   token: string;
 }
 
-export const EditBlog = ({ blog, token }: Props) => {
-  const [editPageState, setEditPageState] = useState(0);
-  const [title, setTitle] = useState(blog.title);
-  const [content, setContent] = useState(blog.content);
-  const [image, setImage] = useState<File>();
+export const EditBlog = ({ blog, token, s3ImageUrls }: Props) => {
+  const [blogUpdateState, setBlogUpdateState] = useState(0);
+  const [blogDeleteState, setBlogDeleteState] = useState(0);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [formBody, setFormBody] = useState<FormBody>({
+    title: blog.title,
+    content: blog.content,
+    imageUrl: blog.imageUrl || "",
+    date: "",
+    published: blog.published,
+    imageFile: null,
+  });
   const { genericRequest } = useApiRequests();
 
-  const uploadFile = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const file = e.target.files[0];
-      setImage(file);
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await genericRequest({ method: "put", path: `blogs/${blog.id}`, body: getBody(formBody), token });
+      setBlogUpdateState(1);
+    } catch (error) {
+      console.error(error);
+      setBlogUpdateState(2);
     }
-  };
-
-  const handleUpdate = async () => {
-    const getBody = () => {
-      if (image) {
-        const body = new FormData();
-        body.append("title", title);
-        body.append("content", content);
-        body.append("image", image);
-        return body;
-      }
-
-      const body = {
-        title,
-        content,
-        imageUrl: blog.imageUrl,
-      };
-      return body;
-    };
-
-    const res = await genericRequest({ method: "put", path: `blogs/${blog.id}`, body: getBody(), token });
-
-    res ? setEditPageState(3) : setEditPageState(4);
   };
 
   const handleDelete = async () => {
     const returnVal = confirm("Are you sure you want to delete?");
     if (returnVal) {
-      const res = await genericRequest({ method: "delete", path: `blogs/${blog.id}`, token });
-
-      res ? setEditPageState(1) : setEditPageState(2);
+      try {
+        await genericRequest({ method: "delete", path: `blogs/${blog.id}`, token });
+        setBlogDeleteState(1);
+      } catch (err) {
+        console.error(err);
+        setBlogDeleteState(2);
+      }
     }
     return false;
   };
 
-  if (editPageState === 0)
-    return (
-      <div>
-        <h1 className="text-3xl font-bold mb-10">Blog editor</h1>
-        <form
-          className="flex flex-col space-y-2"
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <div className="flex flex-col">
-            <label htmlFor="title">Title</label>
-            <input
-              className="py-1 px-3 rounded-lg border"
-              name="title"
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="content">Content</label>
-            <textarea
-              className="p-3 rounded-lg border"
-              name="content"
-              id=""
-              cols={30}
-              rows={10}
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col">
-            {blog.imageUrl && (
-              <>
-                <label htmlFor="image">Current Image</label>
-                <Image src={blog.imageUrl} height="150" width="250" />
-              </>
-            )}
-            <input className={blog.imageUrl ? "mt-2" : ""} type="file" name="image" id="image" onChange={uploadFile} />
-          </div>
-          <div className="flex space-x-3">
-            <button className="rounded-lg bg-teal-200 py-1 px-3" onClick={handleUpdate}>
-              Update
-            </button>
-            <Link href="/admin">
-              <a className="rounded-lg bg-gray-200 py-1 px-3">Cancel</a>
-            </Link>
-            <button className="rounded-lg bg-red-200 py-1 px-3" onClick={handleDelete}>
-              Delete
-            </button>
-          </div>
-        </form>
-      </div>
-    );
-  if (editPageState > 0) {
-    const states = [
-      "",
-      "The post has successfully been deleted",
-      "An error occurred while deleting",
-      "The post has been successfully updated",
-      "An error occurred while updating",
-    ];
-    return (
-      <div>
-        <p className="text-green-700 mb-5">{states[editPageState]}</p>
-        <Link href="/admin">
-          <a className="rounded-lg bg-gray-200 py-1 px-3">Go back</a>
-        </Link>
-      </div>
-    );
-  }
+  if (blogDeleteState > 0) return <ResponseMessages messages={blogDeletionResponseMessages} state={blogDeleteState} />;
+
+  return (
+    <div>
+      {modalIsOpen && <S3Modal s3ImageUrls={s3ImageUrls} setFormBody={setFormBody} setModalIsOpen={setModalIsOpen} />}
+      <h1 className="text-3xl font-bold mb-10">Blog editor</h1>
+      <EditorForm
+        created={blogUpdateState === 1 || blogDeleteState === 1}
+        handleSubmit={handleSubmit}
+        formBody={formBody}
+        setFormBody={setFormBody}
+        setModalIsOpen={setModalIsOpen}
+        disableS3Button={s3ImageUrls.length === 0}
+        createButtonText="Update"
+      />
+      <button className="rounded-lg bg-red-200 py-1 px-3 mt-2 mb-5 w-full hover:bg-red-300" onClick={handleDelete}>
+        Delete
+      </button>
+      <ResponseMessages messages={blogUpdateResponseMessages} state={blogUpdateState} />
+    </div>
+  );
 };
 
 export default EditBlog;
 
 export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
   const { getToken } = useCookies();
-  const { redirect, redirectToLogin } = useStaticHooks();
+  const { redirect, redirectToLogin, getArrayFromS3Urls } = useStaticHooks();
   const token = await getToken(req, res);
   if (!token) {
     return redirectToLogin();
@@ -150,15 +96,17 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
   try {
     const { getItemById } = useApiRequests();
     const { data: blog } = await getItemById("blogs", id);
+    const s3ImageUrls = await getArrayFromS3Urls(token);
 
     return {
       props: {
         blog,
+        s3ImageUrls,
         token,
       },
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return redirect("500");
   }
 };

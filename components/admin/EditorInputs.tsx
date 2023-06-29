@@ -1,17 +1,16 @@
 import { SubmitButton } from "components/common/SubmitButton";
 import Image from "next/image";
 import Link from "next/link";
+import { FormBody } from "./FormBody";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 interface ImageInputProps {
-  selectedS3Image: string;
-  imageFile: File | null;
   disableS3Button: boolean;
-  uploadFile: Function;
+  formBody: FormBody;
+  setFormBody: Dispatch<SetStateAction<any>>;
   setModalIsOpen: Function;
-  setSelectedS3Image: Function;
-  setImageFile: Function;
 }
 
-export const TitleInput = ({ setTitle }: { setTitle: Function }) => {
+export const TitleInput = ({ title, setFormBody }: { title: string; setFormBody: ImageInputProps["setFormBody"] }) => {
   return (
     <div className="flex flex-col">
       <label htmlFor="title">Title</label>
@@ -20,14 +19,23 @@ export const TitleInput = ({ setTitle }: { setTitle: Function }) => {
         type="text"
         name="title"
         id="title"
-        onChange={(e) => setTitle(e.target.value)}
+        value={title}
+        onChange={(e) => setFormBody((state: any) => ({ ...state, title: e.target.value }))}
         required
       />
     </div>
   );
 };
 
-export const ContentInput = ({ setContent }: { setContent: Function }) => {
+export const ContentInput = ({
+  created,
+  content,
+  setFormBody,
+}: {
+  created?: boolean;
+  content: string;
+  setFormBody: ImageInputProps["setFormBody"];
+}) => {
   return (
     <div className="flex flex-col">
       <label htmlFor="content">Content</label>
@@ -35,9 +43,10 @@ export const ContentInput = ({ setContent }: { setContent: Function }) => {
         className="p-3 rounded-lg border"
         name="content"
         id="content"
+        value={content}
         cols={30}
-        rows={5}
-        onChange={(e) => setContent(e.target.value)}
+        rows={created ? 3 : 10}
+        onChange={(e) => setFormBody((state: FormBody): FormBody => ({ ...state, content: e.target.value }))}
         required
       />
     </div>
@@ -64,23 +73,28 @@ export const DateInput = ({ date, setDate }: { date: string; setDate: Function }
   );
 };
 
-export const ImageInputs = ({
-  selectedS3Image,
-  imageFile,
-  uploadFile,
-  setModalIsOpen,
-  setSelectedS3Image,
-  setImageFile,
-  disableS3Button,
-}: ImageInputProps) => {
+export const ImageInputs = ({ setModalIsOpen, formBody, setFormBody, disableS3Button }: ImageInputProps) => {
+  const { imageUrl, imageFile } = formBody;
+  const fileInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      setFormBody(
+        (state: FormBody): FormBody => ({
+          ...state,
+          imageFile: file,
+          imageUrl: "",
+        })
+      );
+    }
+  };
   return (
     <>
       <input
-        className={`${selectedS3Image.length || imageFile === null ? "w-[6.5rem]" : "w-56"}`}
+        className={`${imageUrl.length || imageFile === null ? "w-[6.5rem]" : "w-56"}`}
         type="file"
         name="image"
         id="image"
-        onChange={(e) => uploadFile(e)}
+        onChange={fileInputHandler}
       />
       <button
         type="button"
@@ -91,12 +105,12 @@ export const ImageInputs = ({
       >
         Use image from S3
       </button>
-      {selectedS3Image && (
+      {imageUrl.length > 0 && (
         <div className="relative h-32 w-32">
-          <Image src={selectedS3Image} layout="fill" objectFit="fill" />
+          <Image src={imageUrl} layout="fill" objectFit="fill" />
           <button
             onClick={() => {
-              setSelectedS3Image("");
+              setFormBody((state: FormBody) => ({ ...state, imageUrl: "" }));
             }}
             className="absolute top-0 right-0 text-3xl text-pink-600"
           >
@@ -104,12 +118,12 @@ export const ImageInputs = ({
           </button>
         </div>
       )}
-      {!selectedS3Image && imageFile && (
+      {!imageUrl && imageFile && (
         <div className="flex items-center space-x-3">
           <p>Using new image to upload</p>
           <button
             onClick={() => {
-              setImageFile(null);
+              setFormBody((state: FormBody) => ({ ...state, imageFile: null }));
             }}
             className="text-3xl text-pink-600"
           >
@@ -121,13 +135,15 @@ export const ImageInputs = ({
   );
 };
 
-export const SubmitButtons = ({ created }: { created: boolean }) => {
+export const SubmitButtons = ({ text, created }: { text?: string; created: boolean }) => {
   return (
     <div className="flex space-x-2">
-      <SubmitButton text="Create" disabled={created} />
-      <Link href="/admin">
-        <a className="rounded-lg bg-gray-200 hover:bg-gray-300 py-1 px-3">{created ? "Go back" : "Cancel"}</a>
-      </Link>
+      <SubmitButton text={text || "Create"} disabled={created} />
+      {!created && (
+        <Link href="/admin">
+          <a className="rounded-lg bg-gray-200 hover:bg-gray-300 py-1 px-3">Cancel</a>
+        </Link>
+      )}
     </div>
   );
 };

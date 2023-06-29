@@ -1,6 +1,4 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLongArrowAltLeft, faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   contents: {}[];
@@ -27,7 +25,7 @@ export const AdminPagination = ({ contents, amount, setPostIndex }: Props) => {
           pageIndex > 1 && pageClickHandler(pageIndex - 1);
         }}
       >
-        {/* <FontAwesomeIcon icon={faLongArrowAltLeft} /> */}
+        &lt;
       </button>
       {pagination.map((i) => (
         <button
@@ -44,7 +42,7 @@ export const AdminPagination = ({ contents, amount, setPostIndex }: Props) => {
           pageIndex < highestPageNumber && pageClickHandler(pageIndex + 1);
         }}
       >
-        {/* <FontAwesomeIcon icon={faLongArrowAltRight} /> */}
+        &gt;
       </button>
     </nav>
   );

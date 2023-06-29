@@ -41,10 +41,15 @@ const getItemsByCategory = async (category: string): Promise<AxiosResponse> => {
   return axios.get(`${API_URL}/${category}`);
 };
 
+const getS3Urls = async (token: string): Promise<AxiosResponse> => {
+  return axios.get(`${API_URL}/images`, { headers: { Authorization: token } });
+};
+
 const useApiRequests = () => ({
   genericRequest,
   getItemById,
   getItemsByCategory,
+  getS3Urls,
 });
 
 export default useApiRequests;
