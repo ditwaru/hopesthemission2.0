@@ -27,7 +27,7 @@ const CreateBlog = ({ token, s3ImageUrls }: { token: string; s3ImageUrls: string
     e.preventDefault();
 
     try {
-      const res = await genericRequest({
+      await genericRequest({
         method: "post",
         path: "blogs",
         body: getBody(formBody),

@@ -53,14 +53,19 @@ const EventPage: NextPage<Props> = ({ event }) => {
 export default EventPage;
 
 export const getStaticPaths = async () => {
-  const { getCommonPathsForSingleItems } = useStaticHooks();
-  return getCommonPathsForSingleItems("events");
+  const { getCommonPathsForSingleItems, redirect } = useStaticHooks();
+  try {
+    return await getCommonPathsForSingleItems("events");
+  } catch (err) {
+    console.error(err);
+    return redirect("500");
+  }
 };
 
 export const getStaticProps = async ({ params: { slug } }: { params: { slug: string } }) => {
   const { getCommonPropsForSingleItems, redirect } = useStaticHooks();
   try {
-    return getCommonPropsForSingleItems(slug, "events");
+    return await getCommonPropsForSingleItems(slug, "events");
   } catch (error) {
     console.error(error);
     return redirect("500");

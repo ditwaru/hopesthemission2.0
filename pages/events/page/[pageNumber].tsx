@@ -4,6 +4,7 @@ import { filterOldEvents } from "utils/filterOldEvents";
 import { NextPage } from "next";
 import { NextSeo } from "next-seo";
 import useStaticHooks from "hooks/useStaticHooks";
+import { redirect } from "next/dist/server/api-utils";
 
 interface Props {
   events: {
@@ -57,14 +58,19 @@ const EventsPage: NextPage<Props> = ({ events, pageNumbers, currentPage }) => {
 export default EventsPage;
 
 export const getStaticPaths = async () => {
-  const { getCommonPathsForCategory } = useStaticHooks();
-  return getCommonPathsForCategory("events");
+  const { getCommonPathsForCategory, redirect } = useStaticHooks();
+  try {
+    return await getCommonPathsForCategory("events");
+  } catch (err) {
+    console.error(err);
+    return redirect("500");
+  }
 };
 
 export const getStaticProps = async ({ params: { pageNumber } }: { params: { pageNumber: string } }) => {
   const { getCommonPropsForCategory, redirect } = useStaticHooks();
   try {
-    return getCommonPropsForCategory("events", pageNumber);
+    return await getCommonPropsForCategory("events", pageNumber);
   } catch (error) {
     console.error(error);
     return redirect("500");

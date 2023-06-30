@@ -56,16 +56,17 @@ export default BlogsPage;
 export const getStaticPaths = async () => {
   const { getCommonPathsForSingleItems, redirect } = useStaticHooks();
   try {
-    return getCommonPathsForSingleItems("blogs");
+    return await getCommonPathsForSingleItems("blogs");
   } catch (error) {
     console.error(error);
+    return redirect("500");
   }
 };
 
 export const getStaticProps = async ({ params: { slug } }: { params: { slug: string } }) => {
   const { getCommonPropsForSingleItems, redirect } = useStaticHooks();
   try {
-    return getCommonPropsForSingleItems(slug, "blogs");
+    return await getCommonPropsForSingleItems(slug, "blogs");
   } catch (error) {
     console.error(error);
     return redirect("500");

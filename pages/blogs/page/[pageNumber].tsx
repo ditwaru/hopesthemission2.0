@@ -55,14 +55,19 @@ const BlogsPage: NextPage<Props> = ({ blogs, pageNumbers, currentPage }) => {
 export default BlogsPage;
 
 export const getStaticPaths = async () => {
-  const { getCommonPathsForCategory } = useStaticHooks();
-  return getCommonPathsForCategory("blogs");
+  const { getCommonPathsForCategory, redirect } = useStaticHooks();
+  try {
+    return await getCommonPathsForCategory("blogs");
+  } catch (err) {
+    console.error(err);
+    return redirect("500");
+  }
 };
 
 export const getStaticProps = async ({ params: { pageNumber } }: { params: { pageNumber: string } }) => {
   const { getCommonPropsForCategory, redirect } = useStaticHooks();
   try {
-    return getCommonPropsForCategory("blogs", pageNumber);
+    return await getCommonPropsForCategory("blogs", pageNumber);
   } catch (error) {
     console.error(error);
     return redirect("500");

@@ -44,7 +44,7 @@ const getToken = async (
 
   try {
     const cookieToken = req.cookies.token;
-    const owo = await axios.get(`${API_URL}/admin/validate`, {
+    await axios.get(`${API_URL}/admin/validate`, {
       headers: { Authorization: cookieToken },
     });
     // this will throw an error if the token is invalid

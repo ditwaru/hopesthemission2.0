@@ -33,6 +33,7 @@
     "@typescript-eslint/eslint-plugin": "latest",
     "autoprefixer": "latest",
     "eslint": "^8.8.0",
+    "eslint-config-next": "^13.4.7",
     "postcss": "latest",
     "tailwindcss": "latest"
   }
