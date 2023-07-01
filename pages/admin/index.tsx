@@ -76,11 +76,11 @@ export default AdminPage;
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const { getToken } = useCookies();
-  const { redirectToLogin } = useStaticHooks();
+  const { redirectToLogin, redirect } = useStaticHooks();
   const token = await getToken(req, res);
 
   if (!token) {
-    return redirectToLogin();
+    return redirect("500");
   }
 
   return {
