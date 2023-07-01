@@ -17,6 +17,7 @@ const getToken = async (
 ) => {
   if (req.url?.includes("code=") && !req.cookies?.token) {
     const code = req.url.split("code=")[1];
+
     try {
       const { data: accessToken } = await axios.post(`${API_URL}/admin`, {
         code,

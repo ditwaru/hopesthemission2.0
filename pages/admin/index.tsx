@@ -79,9 +79,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const { redirectToLogin, redirect } = useStaticHooks();
   const token = await getToken(req, res);
 
-  if (!token) {
-    return redirect("500");
-  }
+  // if (!token) {
+  //   return redirect("500");
+  // }
 
   return {
     props: { token },
