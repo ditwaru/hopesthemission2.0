@@ -13,6 +13,7 @@ interface Props {
     slug: string;
   };
 }
+// TODO add alt text to images
 const EventPage: NextPage<Props> = ({ event }) => {
   return (
     <>
@@ -38,8 +39,8 @@ const EventPage: NextPage<Props> = ({ event }) => {
       />
       <section>
         {event.imageUrl && (
-          <div className="relative w-full h-64">
-            <Image src={event.imageUrl} layout="fill" objectPosition="center" objectFit="cover" priority />
+          <div className="relative w-full h-96">
+            <Image src={event.imageUrl} layout="fill" objectPosition="center" objectFit="contain" priority />
           </div>
         )}
         <p className="text-semibold text-md text-red-700 mt-3">{dateConverter(+event.date)}</p>

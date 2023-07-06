@@ -39,8 +39,8 @@ const BlogsPage: NextPage<Props> = ({ blog }) => {
       />
       <section>
         {blog.imageUrl && (
-          <div className="relative w-full h-64">
-            <Image src={blog.imageUrl} layout="fill" objectPosition="center" priority />
+          <div className="relative w-full h-96">
+            <Image src={blog.imageUrl} layout="fill" objectPosition="center" objectFit="contain" priority />
           </div>
         )}
         <h1 className="font-bold text-5xl font-nanumPen">{blog.title}</h1>

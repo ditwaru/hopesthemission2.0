@@ -10,6 +10,8 @@ interface Props {
   content: string;
   bannerImages: string[];
 }
+
+//TODO make the images scrollable
 const AboutPage = ({ content, title, bannerImages }: Props) => {
   const [imageIndex, setImageIndex] = useState(0);
 
@@ -17,7 +19,7 @@ const AboutPage = ({ content, title, bannerImages }: Props) => {
     const interval = setInterval(() => {
       const index = imageIndex === bannerImages.length - 1 ? 0 : imageIndex + 1;
       return setImageIndex(index);
-    }, 2000);
+    }, 5000);
     return () => {
       clearInterval(interval);
     };
@@ -49,12 +51,18 @@ const AboutPage = ({ content, title, bannerImages }: Props) => {
         {bannerImages.length > 0 && (
           <div
             key={bannerImages[imageIndex]}
-            className="absolute top-24 left-0 transform translate-x-1/2 opacity-0 fade drop-shadow-xl w-1/2 max-w-screen-lg h-80"
+            className="relative flex w-full mx-auto max-w-screen-lg h-96 md:h-[25rem]"
           >
-            <Image src={bannerImages[imageIndex]} className="rounded-lg" layout="fill" objectFit="none" />
+            <Image
+              src={bannerImages[imageIndex]}
+              className="rounded-lg"
+              layout="fill"
+              objectPosition="center"
+              objectFit="contain"
+            />
           </div>
         )}
-        <h1 className="text-5xl font-bold font-nanumPen mt-80">{title}</h1>
+        <h1 className="text-5xl font-bold font-nanumPen">{title}</h1>
         <p className="whitespace-pre-wrap">{content}</p>
       </section>
     </>
@@ -79,7 +87,7 @@ export const getStaticProps: GetStaticProps = async () => {
         }
         return acc;
       }, []) || null;
-
+    console.log({ imageArray });
     // const bannerImages = imageArray?.map((imageUrl) => {
     //   return `/about/${imageUrl.split("/about/")[1]}`;
     // });

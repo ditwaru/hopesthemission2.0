@@ -10,6 +10,8 @@ type Props = {
   title?: string;
 };
 
+// TODO fix page height
+
 const Layout = ({ children }: Props) => {
   return (
     <div className="relative min-h-screen">

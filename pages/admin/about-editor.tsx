@@ -15,6 +15,8 @@ interface Props {
   token: string;
 }
 
+//TODO add loading spinner when calling API uploading pictures
+
 export const EditAbout = ({ token, currentTitle, currentContent }: Props) => {
   const [textUpdateState, setTextUpdateState] = useState(0);
   const [imageUploadState, setImageUpdateState] = useState(0);
