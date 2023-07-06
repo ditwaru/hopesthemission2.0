@@ -12,6 +12,7 @@ interface Props {
     published: string;
     id: string;
     slug: string;
+    date: string;
   }[];
 }
 
