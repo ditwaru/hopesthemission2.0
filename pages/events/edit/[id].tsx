@@ -40,8 +40,9 @@ export const EditEvent = ({ event, token, s3ImageUrls }: Props) => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const body = await getBody(formBody);
     try {
-      await genericRequest({ method: "put", path: `events/${event.id}`, body: getBody(formBody), token });
+      await genericRequest({ method: "put", path: `events/${event.id}`, body, token });
       setEventUpdateState(1);
     } catch (error) {
       console.error(error);

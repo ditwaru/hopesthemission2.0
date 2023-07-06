@@ -17,7 +17,7 @@ const AboutPage = ({ content, title, bannerImages }: Props) => {
     const interval = setInterval(() => {
       const index = imageIndex === bannerImages.length - 1 ? 0 : imageIndex + 1;
       return setImageIndex(index);
-    }, 5000);
+    }, 2000);
     return () => {
       clearInterval(interval);
     };

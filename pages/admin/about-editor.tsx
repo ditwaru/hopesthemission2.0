@@ -7,6 +7,7 @@ import { SubmitButton } from "components/common/SubmitButton";
 import { ContentInput, SubmitButtons, TitleInput } from "components/admin/EditorInputs";
 import { ResponseMessages } from "components/admin/ResponseMessages";
 import { imageUploadResponseMessages, textUpdateResponseMessages } from "components/admin/MessagesArrays";
+import { getBase64StringFromFile } from "components/admin/FormBody";
 
 interface Props {
   currentTitle: string;
@@ -17,7 +18,7 @@ interface Props {
 export const EditAbout = ({ token, currentTitle, currentContent }: Props) => {
   const [textUpdateState, setTextUpdateState] = useState(0);
   const [imageUploadState, setImageUpdateState] = useState(0);
-  const [formBody, setFormBody] = useState({ title: currentTitle, content: currentContent });
+  const [formBody, setFormBody] = useState({ title: currentTitle || "", content: currentContent || "" });
   const [imageFiles, setImageFiles] = useState<FileList>();
   const { genericRequest } = useApiRequests();
 
@@ -42,10 +43,12 @@ export const EditAbout = ({ token, currentTitle, currentContent }: Props) => {
 
   const handleImagesSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const body = new FormData();
+    const body: { images: { imageFile: string; fileName: string; contentType: string }[] } = { images: [] };
     if (imageFiles) {
       for (let i = 0; i < imageFiles.length; i++) {
-        body.append("image" + i, imageFiles[i]);
+        const { name: fileName, type: contentType } = imageFiles[i];
+        const imageFile = await getBase64StringFromFile(imageFiles[i]);
+        body.images.push({ imageFile, fileName, contentType });
       }
       try {
         await genericRequest({ method: "post", path: "images/about", body, token });
@@ -68,8 +71,8 @@ export const EditAbout = ({ token, currentTitle, currentContent }: Props) => {
       <form className="mt-10 flex flex-col space-y-2" onSubmit={handleImagesSubmit}>
         <p>Upload images to the about page</p>
         <input type="file" name="images" id="images" onChange={imageInputHandler} multiple />
-        <SubmitButton text="Upload" disabled={imageUploadState > 0} />
         <ResponseMessages messages={imageUploadResponseMessages} state={imageUploadState} />
+        <SubmitButton text="Upload" disabled={imageUploadState > 0 || !imageFiles} />
       </form>
       <ResponseMessages messages={textUpdateResponseMessages} state={textUpdateState} />
     </div>

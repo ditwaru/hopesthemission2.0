@@ -1,5 +1,5 @@
-import { ChangeEvent, Dispatch, FormEvent, ReactNode, SetStateAction } from "react";
-import { ContentInput, DateInput, ImageInputs, SubmitButtons, TitleInput } from "./EditorInputs";
+import { Dispatch, FormEvent, ReactNode, SetStateAction } from "react";
+import { ContentInput, ImageInputs, SubmitButtons, TitleInput } from "./EditorInputs";
 import { FormBody } from "components/admin/FormBody";
 interface Props {
   setModalIsOpen: Function;

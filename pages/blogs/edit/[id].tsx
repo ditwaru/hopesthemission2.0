@@ -37,8 +37,9 @@ export const EditBlog = ({ blog, token, s3ImageUrls }: Props) => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const body = await getBody(formBody);
     try {
-      await genericRequest({ method: "put", path: `blogs/${blog.id}`, body: getBody(formBody), token });
+      await genericRequest({ method: "put", path: `blogs/${blog.id}`, body, token });
       setBlogUpdateState(1);
     } catch (error) {
       console.error(error);

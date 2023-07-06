@@ -27,10 +27,11 @@ const CreateBlog = ({ token, s3ImageUrls }: { token: string; s3ImageUrls: string
     e.preventDefault();
 
     try {
+      const body = await getBody(formBody);
       await genericRequest({
         method: "post",
         path: "blogs",
-        body: getBody(formBody),
+        body,
         token,
       });
       setblogCreationState(1);
@@ -69,16 +70,17 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   }
   try {
     const BUCKET_NAME = process.env.NEXT_PUBLIC_BUCKET_NAME;
+    const REGION = process.env.NEXT_PUBLIC_REGION;
 
     const { genericRequest } = useApiRequests();
     const { data } = await genericRequest({ method: "get", path: "images", token });
-    const s3ImageUrls = data?.map((key: string) => `https://${BUCKET_NAME}.s3.amazonaws.com/${key}`) || null;
+    const s3ImageUrls = data?.map((key: string) => `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${key}`) || null;
 
     return {
       props: { token, s3ImageUrls },
     };
   } catch (err) {
-    console.error(err);
+    // console.error(err);
     return redirect("500");
   }
 };

@@ -19,21 +19,34 @@ const getMultipartBody = (formBody: { [key: string]: string }) => {
   return body;
 };
 
-const getJSONBody = (formBody: { [key: string]: string }) => {
+export const getBase64StringFromFile = async (file: File) => {
+  const buffer = await file.arrayBuffer();
+  return Buffer.from(buffer).toString("base64");
+};
+
+const getJSONBody = async (formBody: { [key: string]: string } & { imageFile: File }) => {
   const body = Object.keys(formBody).reduce((acc, key) => {
     if (key === "imageFile") return acc;
-    if (formBody[key].length) {
-      Object.assign(acc, {
-        [key]: formBody[key],
-      });
-    }
+    Object.assign(acc, {
+      [key]: formBody[key],
+    });
     return acc;
   }, {});
+
+  if (formBody.imageFile != null) {
+    const imageFile = formBody.imageFile;
+    const fileName = imageFile.name;
+    const contentType = imageFile.type;
+    Object.assign(body, {
+      ...body,
+      imageFile: await getBase64StringFromFile(formBody.imageFile),
+      fileName,
+      contentType,
+    });
+  }
   return body;
 };
 
-export const getBody = (formBody: FormBody) => {
-  if (formBody.imageFile) return getMultipartBody(formBody as unknown as { [key: string]: string });
-
-  return getJSONBody(formBody as unknown as { [key: string]: string });
+export const getBody = async (formBody: FormBody) => {
+  return await getJSONBody(formBody as unknown as { [key: string]: string } & { imageFile: File });
 };

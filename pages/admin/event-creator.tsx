@@ -28,10 +28,11 @@ const CreateEvent = ({ token, s3ImageUrls }: { token: string; s3ImageUrls: strin
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      const body = await getBody(formBody);
       await genericRequest({
         method: "post",
         path: "blogs",
-        body: getBody(formBody),
+        body,
         token,
       });
       setEventCreationState(1);
