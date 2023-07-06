@@ -21,14 +21,13 @@ const getCommonPathsForSingleItems = async (category: string): Promise<GetStatic
 const getCommonPropsForSingleItems = async (
   slug: string,
   category: string
-): Promise<GetStaticPropsResult<{ [key: string]: unknown }>> => {
+): Promise<GetStaticPropsResult<{ [key: string]: unknown & { props: unknown } }>> => {
   try {
     const { getItemById, getItemsByCategory } = useApiRequests();
     const { data: items } = await getItemsByCategory(category);
     const search = items?.find((item: { slug: string }) => item.slug === slug);
 
     const { data } = await getItemById(category, search.id);
-
     return {
       props: {
         [category.substring(0, category.length - 1)]: data, // so blogs will return as blog
@@ -39,9 +38,7 @@ const getCommonPropsForSingleItems = async (
     console.error(err);
   }
 
-  return {
-    props: {},
-  };
+  return redirect("404");
 };
 
 const getCommonPathsForCategory = async (category: string) => {

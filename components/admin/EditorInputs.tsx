@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FormBody } from "./FormBody";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { YYYYMMDD } from "utils/dateConverter";
 interface ImageInputProps {
   disableS3Button: boolean;
   formBody: FormBody;
@@ -62,10 +63,14 @@ export const DateInput = ({ date, setDate }: { date: string; setDate: Function }
         name="date"
         id="date"
         className="py-1 px-3 rounded-lg border"
-        value={new Date(+date).toISOString().split("T")[0]}
+        // value={new Date(+date).toISOString().split("T")[0]}
+        value={YYYYMMDD(+date)}
         onChange={(e) => {
           const [year, month, day] = e.target.value.split("-");
-          setDate(new Date(+year, +month - 1, +day).getTime().toString());
+          setDate((restOfFormBody: FormBody) => ({
+            ...restOfFormBody,
+            date: new Date(+year, +month - 1, +day).getTime().toString(),
+          }));
         }}
         required
       />
@@ -90,7 +95,7 @@ export const ImageInputs = ({ setModalIsOpen, formBody, setFormBody, disableS3Bu
   return (
     <>
       <input
-        className={`${imageUrl.length || imageFile === null ? "w-[6.5rem]" : "w-56"}`}
+        className={`${imageUrl?.length || imageFile === null ? "w-[6.5rem]" : "w-56"}`}
         type="file"
         name="image"
         id="image"

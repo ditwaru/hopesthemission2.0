@@ -10,10 +10,12 @@ interface Props {
     published: string;
     id: string;
     slug: string;
+    date: string;
   }[];
   Child: React.FC<any>;
   type: string;
 }
+//TODO this should be using the backend's pagination
 
 export const EditContent = ({ contents, Child, type }: Props) => {
   const [postIndex, setPostIndex] = useState(0);
@@ -29,7 +31,7 @@ export const EditContent = ({ contents, Child, type }: Props) => {
       ? filteredSearchPosts
           .sort((a, b) => new Date(b.published).getTime() - new Date(a.published).getTime())
           .slice(postIndex, postIndex + amount)
-      : filteredSearchPosts.slice(postIndex, postIndex + amount);
+      : filteredSearchPosts.sort((a, b) => +a.date - +b.date).slice(postIndex, postIndex + amount);
 
   return (
     <>

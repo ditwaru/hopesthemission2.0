@@ -31,7 +31,7 @@ const CreateEvent = ({ token, s3ImageUrls }: { token: string; s3ImageUrls: strin
       const body = await getBody(formBody);
       await genericRequest({
         method: "post",
-        path: "blogs",
+        path: "events",
         body,
         token,
       });

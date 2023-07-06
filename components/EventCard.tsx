@@ -1,4 +1,4 @@
-import { monthConverter } from "utils/monthConverter";
+import { monthConverter } from "utils/dateConverter";
 import Link from "next/link";
 
 interface Props {
