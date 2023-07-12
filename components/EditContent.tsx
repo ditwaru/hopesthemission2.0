@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AdminPagination } from "components/AdminPagination";
 import { Search } from "components/Search";
@@ -20,18 +20,32 @@ interface Props {
 export const EditContent = ({ contents, Child, type }: Props) => {
   const [postIndex, setPostIndex] = useState(0);
   const [searchText, setSearchText] = useState("");
+  const [posts, setPosts] = useState<Props["contents"]>(contents);
 
-  const filteredSearchPosts = searchText
-    ? contents.filter((post) => post.content.includes(searchText) || post.title.includes(searchText))
-    : contents;
+  const filterPosts = () => {
+    const lowerCaseSearchText = searchText.toLowerCase();
+    const filteredSearchPosts = searchText
+      ? contents.filter(
+          (post) =>
+            post.content.toLowerCase().includes(lowerCaseSearchText) ||
+            post.title.toLowerCase().includes(lowerCaseSearchText)
+        )
+      : contents;
+
+    setPosts(filteredSearchPosts);
+  };
+
+  useEffect(() => {
+    filterPosts();
+  }, [searchText]);
 
   const amount = 5;
-  const arr = // if it's a blog, sort it by most recent
+  const postsArray = // if it's a blog, sort it by most recent
     type === "blog"
-      ? filteredSearchPosts
+      ? posts
           .sort((a, b) => new Date(b.published).getTime() - new Date(a.published).getTime())
           .slice(postIndex, postIndex + amount)
-      : filteredSearchPosts.sort((a, b) => +a.date - +b.date).slice(postIndex, postIndex + amount);
+      : posts.sort((a, b) => +a.date - +b.date).slice(postIndex, postIndex + amount);
 
   return (
     <>
@@ -42,14 +56,14 @@ export const EditContent = ({ contents, Child, type }: Props) => {
         </Link>
       </div>
       <div className="space-y-5">
-        {arr.map((post) =>
+        {postsArray.map((post) =>
           type === "blog" ? (
             <Child key={post.id} blog={post} slug={`edit/${post.id}`} />
           ) : (
             <Child key={post.id} event={post} slug={`edit/${post.id}`} />
           )
         )}
-        <AdminPagination contents={filteredSearchPosts} amount={amount} setPostIndex={setPostIndex} />
+        <AdminPagination contents={posts} amount={amount} setPostIndex={setPostIndex} />
       </div>
     </>
   );
