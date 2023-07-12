@@ -23,7 +23,7 @@ const Layout = ({ children }: Props) => {
       <header>
         <Navbar />
       </header>
-      <main className="font-nanumGothic pt-24 pb-16 w-11/12 max-w-lg mx-auto">
+      <main className="font-nanumGothic py-32 w-11/12 max-w-lg mx-auto">
         <div className="w-screen absolute top-0 left-0 bottom-0 -z-10 ">
           <Image src={background} layout="fill" objectPosition="center" priority />
         </div>

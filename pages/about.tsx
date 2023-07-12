@@ -62,7 +62,7 @@ const AboutPage = ({ content, title, bannerImages }: Props) => {
             />
           </div>
         )}
-        <h1 className="text-5xl font-bold font-nanumPen">{title}</h1>
+        <h1 className="text-5xl font-bold font-nanumPen mt-10">{title}</h1>
         <p className="whitespace-pre-wrap">{content}</p>
       </section>
     </>

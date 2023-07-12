@@ -43,7 +43,7 @@ const BlogsPage: NextPage<Props> = ({ blog }) => {
             <Image src={blog.imageUrl} layout="fill" objectPosition="center" objectFit="contain" priority />
           </div>
         )}
-        <h1 className="font-bold text-5xl font-nanumPen">{blog.title}</h1>
+        <h1 className="font-bold text-5xl font-nanumPen mt-10">{blog.title}</h1>
         <p className="mb-5 text-xs mt-2">Published: {dateConverter(+blog.published)}</p>
         <p className="whitespace-pre-wrap">{blog.content}</p>
       </section>
