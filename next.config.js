@@ -10,6 +10,7 @@ module.exports = {
       "res.cloudinary.com",
       "htm-serverless-dev-htmpictures-ccew211tm1op.s3.amazonaws.com",
       "htm-serverless-dev-htmpictures-ccew211tm1op.s3.us-east-1.amazonaws.com",
+      "bruh-sound-effect-2-htm.s3.us-east-1.amazonaws.com",
     ],
   },
   async redirects() {
