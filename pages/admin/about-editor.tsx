@@ -8,6 +8,8 @@ import { ContentInput, SubmitButtons, TitleInput } from "components/admin/Editor
 import { ResponseMessages } from "components/admin/ResponseMessages";
 import { imageUploadResponseMessages, textUpdateResponseMessages } from "components/admin/MessagesArrays";
 import { getBase64StringFromFile } from "components/admin/FormBody";
+import { LoadingToSuccess } from "components/common/Icons";
+import { IconStatuses } from "utils/types";
 
 interface Props {
   currentTitle: string;
@@ -15,14 +17,15 @@ interface Props {
   token: string;
 }
 
-//TODO add loading spinner when calling API uploading pictures
-
 export const EditAbout = ({ token, currentTitle, currentContent }: Props) => {
   const [textUpdateState, setTextUpdateState] = useState(0);
   const [imageUploadState, setImageUpdateState] = useState(0);
   const [formBody, setFormBody] = useState({ title: currentTitle || "", content: currentContent || "" });
   const [imageFiles, setImageFiles] = useState<FileList>();
+  const [statusIcon, setStatusIcon] = useState(IconStatuses.OFF);
   const { genericRequest } = useApiRequests();
+
+  const disableUploadImageButton = statusIcon !== IconStatuses.OFF || imageUploadState > 0 || !imageFiles;
 
   const imageInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -53,10 +56,13 @@ export const EditAbout = ({ token, currentTitle, currentContent }: Props) => {
         body.images.push({ imageFile, fileName, contentType });
       }
       try {
+        setStatusIcon(IconStatuses.LOADING);
         await genericRequest({ method: "post", path: "images/about", body, token });
+        setStatusIcon(IconStatuses.SUCCESS);
         setImageUpdateState(1);
       } catch (err) {
         console.error(err);
+        setStatusIcon(IconStatuses.ERROR);
         setImageUpdateState(2);
       }
     }
@@ -72,9 +78,19 @@ export const EditAbout = ({ token, currentTitle, currentContent }: Props) => {
       </form>
       <form className="mt-10 flex flex-col space-y-2" onSubmit={handleImagesSubmit}>
         <p>Upload images to the about page</p>
-        <input type="file" name="images" id="images" onChange={imageInputHandler} multiple />
+        <div className="flex items-center space-x-2">
+          <input
+            className={imageFiles && imageFiles.length > 1 ? "w-44" : ""}
+            type="file"
+            name="images"
+            id="images"
+            onChange={imageInputHandler}
+            multiple
+          />
+          <LoadingToSuccess status={statusIcon} />
+        </div>
         <ResponseMessages messages={imageUploadResponseMessages} state={imageUploadState} />
-        <SubmitButton text="Upload" disabled={imageUploadState > 0 || !imageFiles} />
+        <SubmitButton text="Upload" disabled={disableUploadImageButton} />
       </form>
       <ResponseMessages messages={textUpdateResponseMessages} state={textUpdateState} />
     </div>
