@@ -14,7 +14,7 @@ type Props = {
 
 const Layout = ({ children }: Props) => {
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen overflow-x-hidden">
       <Head>
         <title>Hope&apos;s the Mission</title>
         <meta charSet="utf-8" />
