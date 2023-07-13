@@ -1,6 +1,6 @@
 import { EventCard } from "components/EventCard";
 import { GetServerSideProps, NextPage } from "next";
-import { EditContent } from "components/EditContent";
+import { EditContent } from "components/admin/EditContent";
 import useCookies from "hooks/useCookies";
 import useStaticHooks from "hooks/useStaticHooks";
 import useApiRequests from "hooks/useApiRequests";
