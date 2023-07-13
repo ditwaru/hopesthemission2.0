@@ -93,6 +93,7 @@ export const ImageInputs = ({ setModalIsOpen, formBody, setFormBody, disableS3Bu
     }
   };
   return (
+    // todo add validation on image types only
     <>
       <input
         className={`${imageUrl?.length || imageFile === null ? "w-[6.5rem]" : "w-56"}`}
