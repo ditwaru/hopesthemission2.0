@@ -1,4 +1,4 @@
-import { EditContent } from "components/EditContent";
+import { EditContent } from "components/admin/EditContent";
 import { BlogCard } from "components/BlogCard";
 import { GetServerSideProps, NextPage } from "next";
 import useStaticHooks from "hooks/useStaticHooks";

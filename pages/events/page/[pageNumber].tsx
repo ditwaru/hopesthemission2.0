@@ -1,5 +1,5 @@
 import { EventCard } from "components/EventCard";
-import { Pagination } from "components/Pagination";
+import { Pagination } from "components/common/Pagination";
 import { filterOldEvents } from "utils/filterOldEvents";
 import { NextPage } from "next";
 import { NextSeo } from "next-seo";
