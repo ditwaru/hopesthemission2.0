@@ -1,7 +1,6 @@
 import axios from "axios";
 import { serialize } from "cookie";
 import { IncomingMessage, ServerResponse } from "http";
-import { NextApiRequest, NextApiResponse } from "next";
 import { NextApiRequestCookies } from "next/dist/server/api-utils";
 
 const appClientSecret = process.env.NEXT_PUBLIC_APP_CLIENT_SECRET;
@@ -15,7 +14,6 @@ const getToken = async (
   },
   res: ServerResponse
 ) => {
-  // need to check if existing token on cookie is good before checking this
   if (req.url?.includes("code=") && !req.cookies?.token) {
     const code = req.url.split("code=")[1];
 
@@ -52,7 +50,7 @@ const getToken = async (
     // this will throw an error if the token is invalid
     return cookieToken;
   } catch (error) {
-    // console.error(error);
+    console.error(error);
   }
 
   return null;
