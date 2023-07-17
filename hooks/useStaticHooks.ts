@@ -8,8 +8,8 @@ const BUCKET_NAME = process.env.NEXT_PUBLIC_BUCKET_NAME;
 const getCommonPathsForSingleItems = async (category: string): Promise<GetStaticPathsResult> => {
   const { getItemsByCategory } = useApiRequests();
   const { data } = await getItemsByCategory(category);
-  const paths = data.map(({ slug, id }: { slug: string; id: string }) => {
-    const params = { slug, id, category };
+  const paths = data.map(({ slug }: { slug: string }) => {
+    const params = { slug };
     return { params };
   });
   return {
