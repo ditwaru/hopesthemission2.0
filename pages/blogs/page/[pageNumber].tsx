@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { BlogCard } from "components/BlogCard";
-import { Pagination } from "components/Pagination";
+import { Pagination } from "components/common/Pagination";
 import { NextSeo } from "next-seo";
 import useStaticHooks from "hooks/useStaticHooks";
 

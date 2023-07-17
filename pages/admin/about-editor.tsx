@@ -100,7 +100,6 @@ export const EditAbout = ({ token, currentTitle, currentContent }: Props) => {
 export default EditAbout;
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const url = process.env.NEXT_PUBLIC_SERVER_URL;
   const { getToken } = useCookies();
   const { redirectToLogin, redirect } = useStaticHooks();
   const token = await getToken(req, res);
@@ -115,15 +114,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
     const currentTitle = data.find(({ id }: { id: string }) => id === "title")?.title || null;
     const currentContent = data.find(({ id }: { id: string }) => id === "content")?.content || null;
-    const bannerImages =
-      data.reduce((acc: string[], { imageUrl }: { imageUrl: string }) => {
-        if (imageUrl) {
-          acc.push(imageUrl);
-        }
-        return acc;
-      }, []) || null;
 
-    return { props: { token, currentTitle, currentContent, bannerImages } };
+    return { props: { token, currentTitle, currentContent } };
   } catch (error) {
     console.error(error);
     return redirect("500");

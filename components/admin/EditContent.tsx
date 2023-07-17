@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { AdminPagination } from "components/AdminPagination";
-import { Search } from "components/Search";
+import { AdminPagination } from "components/admin/AdminPagination";
+import { Search } from "components/common/Search";
 
 interface Props {
   contents: {
@@ -15,7 +15,6 @@ interface Props {
   Child: React.FC<any>;
   type: string;
 }
-//TODO this should be using the backend's pagination
 
 export const EditContent = ({ contents, Child, type }: Props) => {
   const [postIndex, setPostIndex] = useState(0);
